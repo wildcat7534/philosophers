@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 23:34:25 by cmassol           #+#    #+#             */
-/*   Updated: 2025/01/30 11:06:10 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/04 16:36:49 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef enum e_malloc
 {
 	MALLOC_PHILOSOPHERS,
 	MALLOC_FORKS,
+	MALLOC_TABLE
 }			t_smalloc;
 
 typedef enum e_code_mtx
@@ -106,6 +107,7 @@ typedef struct s_philo
 	int					meals_eaten;
 	int					died;
 	struct timeval		t_meal;
+	long				last_meal_time;
 	t_forks				*lfork;
 	t_forks				*rfork;
 	pthread_mutex_t		philo_mutex; //TODO a verifier
@@ -121,8 +123,7 @@ typedef struct s_time
 }						t_time;
 
 void					*thd_rte(void *data);
-void					init_table(t_table *table, int argc, char **argv);
-void					init_philosophers(t_table *table);
+t_table					*init_philosophers(int arc, char **argv);
 void					init_forks(t_table *table);
 int						start_simulation(t_table *table);
 int						ft_atoi(const char *str);
@@ -136,11 +137,12 @@ void					ft_usleep(long usec, t_table *table);
 int						error(char *msg);
 int						safe_mutex(t_code_mtx code, t_mtx *mutex);
 int						safe_thread(t_code_thread code, t_philo *philo, void *(*)(void *));
-void					safe_malloc(t_smalloc code, t_table *table);
+t_table					*safe_malloc(t_smalloc code, t_table *table);
 long					gettime(t_time_val time_val);
 int						ft_times_up(int time);
 void					firewatch(void *data, long time_start);
 int						check_argv_positivity(char **argv);
 int						ft_strlen(const char *str);
+void					ft_free(t_table *table);
 
 #endif

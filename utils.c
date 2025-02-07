@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 00:37:51 by cmassol           #+#    #+#             */
-/*   Updated: 2025/01/30 11:05:54 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/03 13:16:06 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,21 @@ int	check_argv_positivity(char **argv)
 		i++;
 	}
 	return (0);
+}
+
+void	ft_free(t_table *table)
+{
+	int	i;
+
+	i = 0;
+	while (i < table->nb_philo)
+	{
+		pthread_mutex_destroy(&table->philo[i].philo_mutex);
+		i++;
+	}
+	pthread_mutex_destroy(&table->forks->fork_mutex);
+	pthread_mutex_destroy(&table->table_mutex);
+	free(table->philo);
+	free(table->forks);
+	free(table);
 }

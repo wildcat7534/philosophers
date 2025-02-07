@@ -6,7 +6,7 @@
 #    By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/31 03:52:33 by cmassol           #+#    #+#              #
-#    Updated: 2025/01/31 06:10:12 by cmassol          ###   ########.fr        #
+#    Updated: 2025/02/07 12:41:29 by cmassol          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = arphilo
 HEADERS = philosophers.h
 
 SOURCES = main.c utils.c time.c printer.c factory.c init.c engine.c pistons.c \
-			eat_mutex.c
+			firewatch.c
 
 OBJECTS = $(addprefix $(OBJDIR)/,$(SOURCES:.c=.o))
 
