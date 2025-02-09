@@ -6,12 +6,13 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 23:44:18 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/04 16:58:17 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/09 15:32:58 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-void	initialisator(t_table *table);
+
+static void	initialisator(t_table *table);
 
 t_table	*init_philosophers(int arc, char **argv)
 {
@@ -36,7 +37,7 @@ t_table	*init_philosophers(int arc, char **argv)
 	return (table);
 }
 
-void	initialisator(t_table *table)
+static void	initialisator(t_table *table)
 {
 	t_philo		*philo;
 	int			i;
@@ -57,12 +58,7 @@ void	initialisator(t_table *table)
 		philo->lfork = &table->forks[i];
 		philo->rfork = &table->forks[(i + 1) % table->nb_philo];
 		safe_mutex(INIT, &philo->lfork->fork_mutex);
-		//printf("pthread init &philo[%d]->lfork\n", i);
 		philo->lfork->fork_id = i;
-		//philo->next = &table->philo[(i + 1) % table->nb_philo];
 		philo->table = table;
 	}
-	printf("nb_philo: %d\ntime_die:%d\ntime_eat:%d\ntime_sleep:%d\nnb_meals_max:%d\n", 
-	table->nb_philo,philo->time_die,philo->time_eat,philo->time_sleep,table->meals_max);
-	printf("[%slast meal time%s %s%ld%s]\n", GREEN, RESET, RED, philo->last_meal_time, RESET);
 }

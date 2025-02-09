@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 19:19:41 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/07 12:58:40 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/09 15:29:36 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	start_simulation(t_table *table)
 {
-	int		i;
+	int	i;
 
 	i = -1;
 	safe_mutex(INIT, &table->table_mutex);
@@ -23,21 +23,12 @@ int	start_simulation(t_table *table)
 	{
 		if (safe_thread(CREATE, &table->philo[i], thd_rte))
 			return (1);
-		//table->philo[i].last_meal_time = gettime(MILLISECOND) - table->t_start;
-		//printf("start simulation : Philo %d last meal time %ld\n", table->philo[i].id, table->philo[i].t_meal.tv_sec);
 		ft_usleep(1000, table);
-		//printf("start simulation : Philo %d last meal time %ld\n", table->philo[i].id, table->philo[i].last_meal_time.tv_sec);
 	}
 	firewatch(table, table->t_start);
-	//printf("start THE END at %ld\n", gettime(MILLISECOND) - table->time_start);
 	i = -1;
 	while (++i < table->nb_philo)
-	{
 		safe_thread(JOIN, &table->philo[i], thd_rte);
-		//printf("Thread %d joined tid : %lu 🫱🏼‍🫲🏻\n", i+1, table->philo[i].tid);
-	}
-	//printf("end of simulation at %ld (time elapsed : %ld)\n", gettime(MILLISECOND), (gettime(MILLISECOND) - table->time_start));
-	//safe_mutex(UNLOCK, &table->table_mutex);
 	ft_free(table);
 	return (0);
 }

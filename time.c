@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 06:35:32 by cmassol           #+#    #+#             */
-/*   Updated: 2025/01/30 11:01:44 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/07 19:30:41 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ void	ft_usleep(long usec, t_table *table)
 		rem = usec - elapsed;
 		if (rem > 1000)
 			usleep(rem / 2);
-		//printf("rem : %ld\n", rem); TODO DEBUG to remove
-		//printf("elaspsed : %ld time_die : %u\n", elapsed, table->time_die);
 		safe_mutex(LOCK, &table->table_mutex);
 		if (elapsed / 1e3 >= table->time_die && table->philo->died == 0)
 		{

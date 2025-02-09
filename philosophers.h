@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 23:34:25 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/04 16:36:49 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/09 15:31:01 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ typedef struct s_philo
 	long				last_meal_time;
 	t_forks				*lfork;
 	t_forks				*rfork;
-	pthread_mutex_t		philo_mutex; //TODO a verifier
+	pthread_mutex_t		philo_mutex;
 	struct s_table		*table;
 	struct s_philo		*next;
 }						t_philo;
@@ -122,10 +122,10 @@ typedef struct s_time
 	suseconds_t			tv_usec;
 }						t_time;
 
+int						start_simulation(t_table *table);
 void					*thd_rte(void *data);
 t_table					*init_philosophers(int arc, char **argv);
 void					init_forks(t_table *table);
-int						start_simulation(t_table *table);
 int						ft_atoi(const char *str);
 int						ft_strcmp(const char *s1, const char *s2);
 void					ft_mutex(t_philo *philo, pthread_mutex_t *philo_mutex);
