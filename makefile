@@ -6,7 +6,7 @@
 #    By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/31 03:52:33 by cmassol           #+#    #+#              #
-#    Updated: 2025/02/07 12:41:29 by cmassol          ###   ########.fr        #
+#    Updated: 2025/02/11 16:22:04 by cmassol          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ OBJDIR = obj
 
 CC = cc
 
-FLAGS = -Wall -Wextra -Werror -pthread
+FLAGS = -Wall -Wextra -Werror
 
 RM = rm -f
 

@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 01:03:59 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/11 13:36:16 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/11 16:41:44 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int arc, char **argv)
 		printf("(MAIN) Error: simulation failed\n");
 		return (1);
 	}
-	printf("MAIN : Simulation ended : %ld\n", gettime(MILLISECOND));
+	//printf("MAIN : Simulation ended : %ld\n", gettime(MILLISECOND));
 	return (0);
 }
 

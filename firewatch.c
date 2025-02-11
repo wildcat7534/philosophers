@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:40:40 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/11 15:49:41 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/11 17:56:53 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,33 +23,44 @@ void	firewatch(void *data, long time_start)
 	int		eaten;
 	int		k;
 	int		dead;
-
+	long	t_die;
 	table = (t_table *)data;
     int maxmeal = table->meals_max;
+
+maxmeal = 0;
+j	= 0;
+(void)all_eaten;
 	//printf("****************Firewatch started*******************************\n");
 	while (!table->philo_died)
 	{
 		i = -1;
         dead = 0;
         k = 0;
+		t_die = 0;
 		while (++i < table->nb_philo)
 		{
+			//ft_usleep(100, table);
                 safe_mutex(LOCK, &table->philo[i].philo_mutex);
                 t_eat = table->philo[i].last_meal_time;
                 eaten = table->philo[i].meals_eaten;
                 dead = table->philo[i].died;
+				t_die = table->philo[i].time_die;
                 safe_mutex(UNLOCK, &table->philo[i].philo_mutex);
-				if ((gettime(MILLISECOND) - t_eat >= table->philo[i].time_die && t_eat != 0) || dead == 1)
+				if ((gettime(MILLISECOND) - t_eat >= t_die && t_eat != 0) || dead == 1)
 				{
+					safe_mutex(LOCK, &table->philo[i].philo_mutex);
 					table->philo[i].died = 1;
+					printf("%ld %d died\n", gettime(MILLISECOND) - time_start, table->philo[i].id);
+					safe_mutex(UNLOCK, &table->philo[i].philo_mutex);
+					safe_mutex(LOCK, &table->table_mutex);
 					table->philo_died = 1;
-					ft_usleep(420, table);
-					printf("%sFIREWATCH [Philo : %d died]%s\n", RED, table->philo[i].id, RESET);
-					printf("current time %ld\n", gettime(MILLISECOND) - time_start);
-					printf("Philo %d           [%slast meal time %ld%s]\n", table->philo[i].id, RED, gettime(MILLISECOND) - t_eat, RESET);
+					safe_mutex(UNLOCK, &table->table_mutex);
+					//ft_usleep(420, table);
+					//printf("%sFIREWATCH [Philo : %d died]%s\n", RED, table->philo[i].id, RESET);
+					//printf("Philo %d           [%slast meal time %ld%s]\n", table->philo[i].id, RED, gettime(MILLISECOND) - t_eat, RESET);
 					break;
 				}
-				else if (eaten != 0 && eaten >= maxmeal && maxmeal != 0)
+/*				else if (eaten != 0 && eaten >= maxmeal && maxmeal != 0)
 				{
                     j = 0;
 					while (j < table->nb_philo)
@@ -70,7 +81,7 @@ void	firewatch(void *data, long time_start)
                         else 
     						j++;
 					}
-			}
+			}*/
 		}
 	}
 	//printf("*******************************************************Firewatch ended**********************************\n");
