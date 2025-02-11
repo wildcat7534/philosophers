@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:40:40 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/09 15:31:46 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/11 15:49:41 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	firewatch(void *data, long time_start)
 
 	table = (t_table *)data;
     int maxmeal = table->meals_max;
-	printf("****************Firewatch started*******************************\n");
+	//printf("****************Firewatch started*******************************\n");
 	while (!table->philo_died)
 	{
 		i = -1;
@@ -73,7 +73,7 @@ void	firewatch(void *data, long time_start)
 			}
 		}
 	}
-	printf("*******************************************************Firewatch ended**********************************\n");
+	//printf("*******************************************************Firewatch ended**********************************\n");
 	return ;
 }
 static int	all_eaten(t_table *table)

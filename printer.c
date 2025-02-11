@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 20:34:35 by cmassol           #+#    #+#             */
-/*   Updated: 2025/01/30 11:01:20 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/11 15:53:13 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,9 @@ void	print_status(t_philo *philo, char *status, long time)
 	else
 		printf("%ld : %sPhilosopher%s [%s%d%s] %s\n", time, BYELLOW, RESET, YELLOW,
 			philo->id, RESET, smiley);
+}
+
+void	printer(long time, t_philo *philo, char *status)
+{
+	printf("%ld %d %s\n", time, philo->id, status);
 }

@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 21:54:00 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/09 15:40:27 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/11 15:54:37 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	*thd_rte(void *data)
 			break;
 		safe_mutex(UNLOCK, &philo->philo_mutex);
 		safe_mutex(UNLOCK, &philo->philo_mutex);
-		print_status(philo, "is thinking", gettime(MILLISECOND));
+		//print_status(philo, "is thinking", gettime(MILLISECOND));
+		printer(gettime(MILLISECOND), philo, "is thinking");
 		if (eater(philo))
 			return (NULL);
 	}
@@ -42,7 +43,8 @@ static int	eater(t_philo *philo)
 	{
 		if (!philo->died && !philo->table->philo_died)
 		{
-			print_status(philo, "is sleeping", gettime(MILLISECOND));
+			//print_status(philo, "is sleeping", gettime(MILLISECOND));
+			printer(gettime(MILLISECOND), philo, "is sleeping");
 			ft_usleep(philo->time_sleep * 1000, philo->table);
 		}
 		else
@@ -76,6 +78,7 @@ int	eat_mutex(t_philo *philo)
 			if (philo->died || philo->table->philo_died)
 				return (1);
 		}
+		printer( gettime(MILLISECOND), philo, "has taken a fork");
 		if (philo->table->nb_philo == 1)
 		{
 			philo->died = 1;
@@ -83,6 +86,7 @@ int	eat_mutex(t_philo *philo)
 		}
 		if (safe_mutex(LOCK, &philo->rfork->fork_mutex) != 0)
 			return (1);
+		printer(gettime(MILLISECOND), philo, "has taken a fork");
 		if (philo->died == 1 || philo->table->philo_died == 1)
 			return (1);
 		break;
@@ -94,7 +98,8 @@ static int	eat_mutex_2(t_philo *philo)
 {	
 	if ((philo->meals_eaten < philo->meals_max) || philo->meals_max == 0)
 	{
-		print_status(philo, "is eating", gettime(MILLISECOND));
+		//print_status(philo, "is eating", gettime(MILLISECOND));
+		printer(gettime(MILLISECOND), philo, "is eating");
 		philo->meals_eaten++;
 		if (safe_mutex(LOCK, &philo->philo_mutex) != 0)
 			return (1);

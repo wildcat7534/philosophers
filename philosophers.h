@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 23:34:25 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/09 15:31:01 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/11 15:53:30 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,5 +144,6 @@ void					firewatch(void *data, long time_start);
 int						check_argv_positivity(char **argv);
 int						ft_strlen(const char *str);
 void					ft_free(t_table *table);
+void					printer(long time, t_philo *philo, char *status);
 
 #endif
