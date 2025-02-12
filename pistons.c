@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 21:54:00 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/12 22:46:44 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/12 23:13:42 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static int	eat_mutex(t_philo *philo, int id, long t_start)
 			if (safe_mutex(LOCK, &philo->lfork->fork_mutex) != 0)
 				return (1);
 			printer(gettime(MILLISECOND) - t_start, id, "has taken a fork");
+			
 			if ( safe_mutex(LOCK, &philo->rfork->fork_mutex) != 0)
 			{
 				safe_mutex(UNLOCK, &philo->lfork->fork_mutex);
@@ -80,8 +81,9 @@ static int	eat_mutex(t_philo *philo, int id, long t_start)
 			}
 			printer(gettime(MILLISECOND) - t_start, id, "has taken a fork");
 		}
+		return(eat_mutex_2(philo, id, t_start));
 	}
-	return (eat_mutex_2(philo, id, t_start));
+	return (1);
 }
 
 static int	eat_mutex_2(t_philo *philo, int id, long t_start)
@@ -96,14 +98,14 @@ static int	eat_mutex_2(t_philo *philo, int id, long t_start)
 		philo->last_meal_time = gettime(MILLISECOND);
 		safe_mutex(UNLOCK, &philo->philo_mutex);
 		ft_usleep(philo->time_eat * 1000);
+		safe_mutex(UNLOCK, &philo->rfork->fork_mutex);
+		safe_mutex(UNLOCK, &philo->lfork->fork_mutex);
 	}
 	else
 	{
-		safe_mutex(UNLOCK, &philo->lfork->fork_mutex);
 		safe_mutex(UNLOCK, &philo->rfork->fork_mutex);
+		safe_mutex(UNLOCK, &philo->lfork->fork_mutex);
 		return (1);
 	}
-	safe_mutex(UNLOCK, &philo->lfork->fork_mutex);
-	safe_mutex(UNLOCK, &philo->rfork->fork_mutex);
 	return (0);
 }

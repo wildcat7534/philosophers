@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 01:03:59 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/12 21:44:44 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/12 23:16:07 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ int	main(int arc, char **argv)
 // norm
 // makefile V
 // valgrind v0.10
-// modulo %2 == 0 pour le nb de philo pair
-// PRINT FOURCHETTE TAKEN
-// PRINT PHILO IS EATING etc
+// modulo %2 == 0 pour le nb de philo pair v
+// PRINT FOURCHETTE TAKEN v
+// PRINT PHILO IS EATING etc v
+
+// 1 philo a gerer
+// temps a gerer
 
