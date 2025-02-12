@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 23:34:25 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/11 15:53:30 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/12 01:29:59 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ typedef enum e_malloc
 {
 	MALLOC_PHILOSOPHERS,
 	MALLOC_FORKS,
-	MALLOC_TABLE
+	MALLOC_TABLE,
+	MALLOC_PRINTER,
 }			t_smalloc;
 
 typedef enum e_code_mtx
@@ -74,9 +75,10 @@ typedef enum e_status
 
 typedef pthread_mutex_t	t_mtx;
 
+
 typedef struct s_forks
 {
-	pthread_mutex_t				fork_mutex;
+	pthread_mutex_t		fork_mutex;
 	int					fork_id;
 }						t_forks;
 
@@ -93,6 +95,7 @@ typedef struct s_table
 	long				t_start;
 	t_forks				*forks;
 	pthread_mutex_t		table_mutex;
+	struct s_printer	*printer;
 	struct s_philo		*philo;
 }						t_table;
 
@@ -114,7 +117,6 @@ typedef struct s_philo
 	struct s_table		*table;
 	struct s_philo		*next;
 }						t_philo;
-
 
 typedef struct s_time
 {
@@ -145,5 +147,12 @@ int						check_argv_positivity(char **argv);
 int						ft_strlen(const char *str);
 void					ft_free(t_table *table);
 void					printer(long time, t_philo *philo, char *status);
+int						mtx_died(t_philo *philo);
+int						mtx_table_died(t_philo *philo);
+int						mtx_table_meal(t_philo *philo);
+int						mtx_table_maxmeals(t_philo *philo);
+int						mtx_nb_philo(t_philo *philo);
+int						mtx_meal_eat_philo(t_philo *philo);
+long					mtx_table_tdie(t_philo *philo);
 
 #endif

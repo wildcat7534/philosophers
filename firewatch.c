@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:40:40 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/11 17:56:53 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/12 01:35:32 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,8 @@ void	firewatch(void *data, long time_start)
 	int		dead;
 	long	t_die;
 	table = (t_table *)data;
-    int maxmeal = table->meals_max;
 
-maxmeal = 0;
-j	= 0;
-(void)all_eaten;
+	j = 0;
 	//printf("****************Firewatch started*******************************\n");
 	while (!table->philo_died)
 	{
@@ -39,11 +36,16 @@ j	= 0;
 		t_die = 0;
 		while (++i < table->nb_philo)
 		{
-			//ft_usleep(100, table);
                 safe_mutex(LOCK, &table->philo[i].philo_mutex);
                 t_eat = table->philo[i].last_meal_time;
+                safe_mutex(UNLOCK, &table->philo[i].philo_mutex);
+/*                 safe_mutex(LOCK, &table->philo[i].philo_mutex);
                 eaten = table->philo[i].meals_eaten;
+                safe_mutex(UNLOCK, &table->philo[i].philo_mutex); */
+                safe_mutex(LOCK, &table->philo[i].philo_mutex);
                 dead = table->philo[i].died;
+                safe_mutex(UNLOCK, &table->philo[i].philo_mutex);
+                safe_mutex(LOCK, &table->philo[i].philo_mutex);
 				t_die = table->philo[i].time_die;
                 safe_mutex(UNLOCK, &table->philo[i].philo_mutex);
 				if ((gettime(MILLISECOND) - t_eat >= t_die && t_eat != 0) || dead == 1)
@@ -60,12 +62,12 @@ j	= 0;
 					//printf("Philo %d           [%slast meal time %ld%s]\n", table->philo[i].id, RED, gettime(MILLISECOND) - t_eat, RESET);
 					break;
 				}
-/*				else if (eaten != 0 && eaten >= maxmeal && maxmeal != 0)
+				else if (eaten != 0 && eaten >= mtx_table_maxmeals(table->philo) && mtx_table_maxmeals(table->philo) != 0)
 				{
                     j = 0;
-					while (j < table->nb_philo)
+					while (j < mtx_nb_philo(table->philo))
 					{					
-						if ( all_eaten(table) == 1 && k < table->nb_philo)
+						if ( all_eaten(table) == 1 && k < mtx_nb_philo(table->philo))
                         {
                             k = 0;
                             table->philo_died = 1;
@@ -81,10 +83,10 @@ j	= 0;
                         else 
     						j++;
 					}
-			}*/
+			}
 		}
+		//ft_usleep(1000, table);
 	}
-	//printf("*******************************************************Firewatch ended**********************************\n");
 	return ;
 }
 static int	all_eaten(t_table *table)
@@ -92,10 +94,10 @@ static int	all_eaten(t_table *table)
 	int	i;
 
 	i = -1;
-	while (++i < table->nb_philo)
+	while (++i < mtx_nb_philo(table->philo))
 	{
 		safe_mutex(LOCK, &table->philo[i].philo_mutex);
-		if (table->philo[i].meals_eaten < table->meals_max)
+		if (table->philo[i].meals_eaten < mtx_table_maxmeals(table->philo))
 		{
 			safe_mutex(UNLOCK, &table->philo[i].philo_mutex);
 			return (0);

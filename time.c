@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 06:35:32 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/11 16:20:09 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/12 01:30:46 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_usleep(long usec, t_table *table)
 	long			rem;
 	struct timeval	start;
 	struct timeval	stop;
-
+(void)table;
 	elapsed = 0;
 	gettimeofday(&start, NULL);
 	while (elapsed < usec)
@@ -65,15 +65,13 @@ void	ft_usleep(long usec, t_table *table)
 		rem = usec - elapsed;
 		if (rem > 1000)
 			usleep(rem / 2);
-		safe_mutex(LOCK, &table->table_mutex);
-		if (elapsed / 1e3 >= table->time_die && table->philo->died == 1)
+/* 		if (elapsed / 1e3 >= mtx_table_tdie(table->philo) * 2)
 		{
+			safe_mutex(LOCK, &table->table_mutex);
 			printf("TIME UP !!!(%ld) Philo %d died\n", elapsed, table->philo->id);
-			table->philo->died = 1;
-			table->philo->table->philo_died = 1;
+			table->philo_died = 1;
 			safe_mutex(UNLOCK, &table->table_mutex);
 			return ;
-		}
-		safe_mutex(UNLOCK, &table->table_mutex);
+		} */
 	}
 }

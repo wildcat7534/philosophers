@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 00:37:51 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/03 13:16:06 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/12 01:20:35 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,67 @@ void	ft_free(t_table *table)
 {
 	int	i;
 
-	i = 0;
-	while (i < table->nb_philo)
+	i = -1;
+	while (++i < table->nb_philo)
 	{
+		//ft_usleep(10000, table);
+		pthread_mutex_destroy(&table->philo[i].lfork->fork_mutex);
 		pthread_mutex_destroy(&table->philo[i].philo_mutex);
-		i++;
 	}
-	pthread_mutex_destroy(&table->forks->fork_mutex);
 	pthread_mutex_destroy(&table->table_mutex);
 	free(table->philo);
 	free(table->forks);
 	free(table);
+}
+
+int mtx_died(t_philo *philo)
+{
+	int	p_died;
+	safe_mutex(LOCK, &philo->philo_mutex);
+	p_died = philo->died;
+	safe_mutex(UNLOCK, &philo->philo_mutex);
+	return (p_died);
+}
+
+int mtx_table_died(t_philo *philo)
+{
+	int	t_died;
+	safe_mutex(LOCK, &philo->philo_mutex);
+	t_died = philo->table->philo_died;
+	safe_mutex(UNLOCK, &philo->philo_mutex);
+	return (t_died);
+}
+
+int mtx_table_maxmeals(t_philo *philo)
+{
+	int	t_maxmeals;
+	safe_mutex(LOCK, &philo->philo_mutex);
+	t_maxmeals = philo->table->meals_max;
+	safe_mutex(UNLOCK, &philo->philo_mutex);
+	return (t_maxmeals);
+}
+int	mtx_nb_philo(t_philo *philo)
+{
+	int	nb_philo;
+	safe_mutex(LOCK, &philo->philo_mutex);
+	nb_philo = philo->table->nb_philo;
+	safe_mutex(UNLOCK, &philo->philo_mutex);
+	return (nb_philo);
+}
+long mtx_table_tdie(t_philo *philo)
+{
+	int	t_die;
+	safe_mutex(LOCK, &philo->philo_mutex);
+	t_die = philo->table->time_die;
+	safe_mutex(UNLOCK, &philo->philo_mutex);
+	return (t_die);
+}
+
+int mtx_meal_eat_philo(t_philo *philo)
+{
+	int	meal_eat;
+	safe_mutex(LOCK, &philo->philo_mutex);
+	meal_eat = philo->meals_eaten;
+	safe_mutex(UNLOCK, &philo->philo_mutex);
+	return (meal_eat);
 }
