@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 00:37:51 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/12 21:25:56 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/12 22:15:09 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,6 @@ int mtx_p_max_meals(t_philo *philo)
 	safe_mutex(UNLOCK, &philo->philo_mutex);
 	return (p_max_meals);
 }
-
 
 // TABLE MUTEX /////////////////////////////////////////////
 

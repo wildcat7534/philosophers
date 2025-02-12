@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 19:19:41 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/12 21:45:15 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/12 22:23:51 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	start_simulation(t_table *table)
 	table->t_start = gettime(MILLISECOND);
 	while (++i < table->nb_philo)
 	{
+		if (mtx_read_id(&table->philo[i]) % 2 == 0)
+			ft_usleep(table->time_eat * 1000);
 		if (safe_thread(CREATE, &table->philo[i], thd_rte) != 0)
 			return (1);
 		//ft_usleep(420);
