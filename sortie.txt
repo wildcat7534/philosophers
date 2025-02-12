@@ -1,478 +1,87 @@
-==34026== Helgrind, a thread error detector
-==34026== Copyright (C) 2007-2017, and GNU GPL'd, by OpenWorks LLP et al.
-==34026== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==34026== Command: ./philo 4 410 200 200
-==34026== 
-==34026== ---Thread-Announcement------------------------------------------
-==34026== 
-==34026== Thread #5 was created
-==34026==    at 0x49929F3: clone (clone.S:76)
-==34026==    by 0x49938EE: __clone_internal (clone-internal.c:83)
-==34026==    by 0x49016D8: create_thread (pthread_create.c:295)
-==34026==    by 0x49021FF: pthread_create@@GLIBC_2.34 (pthread_create.c:828)
-==34026==    by 0x4853767: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A0D3: safe_thread (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A61B: start_simulation (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093E3: main (in /home/wildcat/projets/philo42/philo)
-==34026== 
-==34026== ---Thread-Announcement------------------------------------------
-==34026== 
-==34026== Thread #2 was created
-==34026==    at 0x49929F3: clone (clone.S:76)
-==34026==    by 0x49938EE: __clone_internal (clone-internal.c:83)
-==34026==    by 0x49016D8: create_thread (pthread_create.c:295)
-==34026==    by 0x49021FF: pthread_create@@GLIBC_2.34 (pthread_create.c:828)
-==34026==    by 0x4853767: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A0D3: safe_thread (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A61B: start_simulation (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093E3: main (in /home/wildcat/projets/philo42/philo)
-==34026== 
-==34026== ----------------------------------------------------------------
-==34026== 
-==34026==  Lock at 0x4A992D8 was first observed
-==34026==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A001: safe_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A47D: initialisator (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A408: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a992d8 is 488 bytes inside a block of size 544 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A25A: safe_malloc (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A3B9: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Block was alloc'd by thread #1
-==34026== 
-==34026==  Lock at 0x4A99140 was first observed
-==34026==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A001: safe_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A47D: initialisator (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A408: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a99140 is 80 bytes inside a block of size 544 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A25A: safe_malloc (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A3B9: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Block was alloc'd by thread #1
-==34026== 
-==34026==  Lock at 0x4A99350 was first observed
-==34026==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A001: safe_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A576: initialisator (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A408: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a99350 is 0 bytes inside a block of size 192 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A2A8: safe_malloc (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A3CA: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Block was alloc'd by thread #1
-==34026== 
-==34026==  Lock at 0x4A99380 was first observed
-==34026==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A001: safe_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A576: initialisator (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A408: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a99380 is 48 bytes inside a block of size 192 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A2A8: safe_malloc (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A3CA: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Block was alloc'd by thread #1
-==34026== 
-==34026== Possible data race during write of size 1 at 0x4A995A0 by thread #5
-==34026== Locks held: 1, at address 0x4A992D8
-==34026==    at 0x48597B4: mempcpy (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x48F8664: _IO_new_file_xsputn (fileops.c:1235)
-==34026==    by 0x48F8664: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1196)
-==34026==    by 0x48E2CA8: outstring_func (vfprintf-internal.c:239)
-==34026==    by 0x48E2CA8: __vfprintf_internal (vfprintf-internal.c:1516)
-==34026==    by 0x48CD79E: printf (printf.c:33)
-==34026==    by 0x109FBF: printer (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A71A: thd_rte (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x485396A: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x4901AC2: start_thread (pthread_create.c:442)
-==34026==    by 0x4992A03: clone (clone.S:100)
-==34026== 
-==34026== This conflicts with a previous write of size 1 by thread #2
-==34026== Locks held: 3, at addresses 0x4A99140 0x4A99350 0x4A99380
-==34026==    at 0x48597B4: mempcpy (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x48F8664: _IO_new_file_xsputn (fileops.c:1235)
-==34026==    by 0x48F8664: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1196)
-==34026==    by 0x48E2CA8: outstring_func (vfprintf-internal.c:239)
-==34026==    by 0x48E2CA8: __vfprintf_internal (vfprintf-internal.c:1516)
-==34026==    by 0x48CD79E: printf (printf.c:33)
-==34026==    by 0x109FBF: printer (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10AA1D: eat_mutex_2 (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A9B5: eat_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A777: eater (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a995a0 is 0 bytes inside a block of size 1,024 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x48EBBA3: _IO_file_doallocate (filedoalloc.c:101)
-==34026==    by 0x48FACDF: _IO_doallocbuf (genops.c:347)
-==34026==    by 0x48F9F5F: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:744)
-==34026==    by 0x48F86D4: _IO_new_file_xsputn (fileops.c:1243)
-==34026==    by 0x48F86D4: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1196)
-==34026==    by 0x48E2CA8: outstring_func (vfprintf-internal.c:239)
-==34026==    by 0x48E2CA8: __vfprintf_internal (vfprintf-internal.c:1516)
-==34026==    by 0x48CD79E: printf (printf.c:33)
-==34026==    by 0x109FBF: printer (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A71A: thd_rte (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x485396A: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x4901AC2: start_thread (pthread_create.c:442)
-==34026==    by 0x4992A03: clone (clone.S:100)
-==34026==  Block was alloc'd by thread #2
-==34026== 
-==34026== ----------------------------------------------------------------
-==34026== 
-==34026==  Lock at 0x4A992D8 was first observed
-==34026==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A001: safe_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A47D: initialisator (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A408: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a992d8 is 488 bytes inside a block of size 544 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A25A: safe_malloc (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A3B9: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Block was alloc'd by thread #1
-==34026== 
-==34026==  Lock at 0x4A99140 was first observed
-==34026==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A001: safe_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A47D: initialisator (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A408: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a99140 is 80 bytes inside a block of size 544 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A25A: safe_malloc (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A3B9: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Block was alloc'd by thread #1
-==34026== 
-==34026==  Lock at 0x4A99350 was first observed
-==34026==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A001: safe_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A576: initialisator (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A408: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a99350 is 0 bytes inside a block of size 192 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A2A8: safe_malloc (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A3CA: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Block was alloc'd by thread #1
-==34026== 
-==34026==  Lock at 0x4A99380 was first observed
-==34026==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A001: safe_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A576: initialisator (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A408: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a99380 is 48 bytes inside a block of size 192 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A2A8: safe_malloc (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A3CA: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Block was alloc'd by thread #1
-==34026== 
-==34026== Possible data race during write of size 1 at 0x4A995A2 by thread #5
-==34026== Locks held: 1, at address 0x4A992D8
-==34026==    at 0x4859796: mempcpy (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x48F8664: _IO_new_file_xsputn (fileops.c:1235)
-==34026==    by 0x48F8664: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1196)
-==34026==    by 0x48E2FC9: outstring_func (vfprintf-internal.c:239)
-==34026==    by 0x48E2FC9: __vfprintf_internal (vfprintf-internal.c:1593)
-==34026==    by 0x48CD79E: printf (printf.c:33)
-==34026==    by 0x109FBF: printer (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A71A: thd_rte (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x485396A: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x4901AC2: start_thread (pthread_create.c:442)
-==34026==    by 0x4992A03: clone (clone.S:100)
-==34026== 
-==34026== This conflicts with a previous write of size 1 by thread #2
-==34026== Locks held: 3, at addresses 0x4A99140 0x4A99350 0x4A99380
-==34026==    at 0x4859796: mempcpy (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x48F8664: _IO_new_file_xsputn (fileops.c:1235)
-==34026==    by 0x48F8664: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1196)
-==34026==    by 0x48E2FC9: outstring_func (vfprintf-internal.c:239)
-==34026==    by 0x48E2FC9: __vfprintf_internal (vfprintf-internal.c:1593)
-==34026==    by 0x48CD79E: printf (printf.c:33)
-==34026==    by 0x109FBF: printer (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10AA1D: eat_mutex_2 (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A9B5: eat_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A777: eater (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a995a2 is 2 bytes inside a block of size 1,024 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x48EBBA3: _IO_file_doallocate (filedoalloc.c:101)
-==34026==    by 0x48FACDF: _IO_doallocbuf (genops.c:347)
-==34026==    by 0x48F9F5F: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:744)
-==34026==    by 0x48F86D4: _IO_new_file_xsputn (fileops.c:1243)
-==34026==    by 0x48F86D4: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1196)
-==34026==    by 0x48E2CA8: outstring_func (vfprintf-internal.c:239)
-==34026==    by 0x48E2CA8: __vfprintf_internal (vfprintf-internal.c:1516)
-==34026==    by 0x48CD79E: printf (printf.c:33)
-==34026==    by 0x109FBF: printer (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A71A: thd_rte (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x485396A: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x4901AC2: start_thread (pthread_create.c:442)
-==34026==    by 0x4992A03: clone (clone.S:100)
-==34026==  Block was alloc'd by thread #2
-==34026== 
-==34026== ----------------------------------------------------------------
-==34026== 
-==34026==  Lock at 0x4A992D8 was first observed
-==34026==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A001: safe_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A47D: initialisator (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A408: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a992d8 is 488 bytes inside a block of size 544 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A25A: safe_malloc (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A3B9: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Block was alloc'd by thread #1
-==34026== 
-==34026==  Lock at 0x4A99140 was first observed
-==34026==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A001: safe_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A47D: initialisator (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A408: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a99140 is 80 bytes inside a block of size 544 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A25A: safe_malloc (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A3B9: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Block was alloc'd by thread #1
-==34026== 
-==34026==  Lock at 0x4A99350 was first observed
-==34026==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A001: safe_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A576: initialisator (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A408: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a99350 is 0 bytes inside a block of size 192 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A2A8: safe_malloc (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A3CA: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Block was alloc'd by thread #1
-==34026== 
-==34026==  Lock at 0x4A99380 was first observed
-==34026==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A001: safe_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A576: initialisator (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A408: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a99380 is 48 bytes inside a block of size 192 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A2A8: safe_malloc (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A3CA: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Block was alloc'd by thread #1
-==34026== 
-==34026== Possible data race during write of size 1 at 0x4A995AF by thread #5
-==34026== Locks held: 1, at address 0x4A992D8
-==34026==    at 0x4859796: mempcpy (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x48F8664: _IO_new_file_xsputn (fileops.c:1235)
-==34026==    by 0x48F8664: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1196)
-==34026==    by 0x48E400B: outstring_func (vfprintf-internal.c:239)
-==34026==    by 0x48E400B: __vfprintf_internal (vfprintf-internal.c:1517)
-==34026==    by 0x48CD79E: printf (printf.c:33)
-==34026==    by 0x109FBF: printer (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A71A: thd_rte (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x485396A: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x4901AC2: start_thread (pthread_create.c:442)
-==34026==    by 0x4992A03: clone (clone.S:100)
-==34026== 
-==34026== This conflicts with a previous write of size 1 by thread #2
-==34026== Locks held: 3, at addresses 0x4A99140 0x4A99350 0x4A99380
-==34026==    at 0x4859796: mempcpy (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x48F8664: _IO_new_file_xsputn (fileops.c:1235)
-==34026==    by 0x48F8664: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1196)
-==34026==    by 0x48E400B: outstring_func (vfprintf-internal.c:239)
-==34026==    by 0x48E400B: __vfprintf_internal (vfprintf-internal.c:1517)
-==34026==    by 0x48CD79E: printf (printf.c:33)
-==34026==    by 0x109FBF: printer (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A8FF: eat_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A777: eater (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A726: thd_rte (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a995af is 15 bytes inside a block of size 1,024 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x48EBBA3: _IO_file_doallocate (filedoalloc.c:101)
-==34026==    by 0x48FACDF: _IO_doallocbuf (genops.c:347)
-==34026==    by 0x48F9F5F: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:744)
-==34026==    by 0x48F86D4: _IO_new_file_xsputn (fileops.c:1243)
-==34026==    by 0x48F86D4: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1196)
-==34026==    by 0x48E2CA8: outstring_func (vfprintf-internal.c:239)
-==34026==    by 0x48E2CA8: __vfprintf_internal (vfprintf-internal.c:1516)
-==34026==    by 0x48CD79E: printf (printf.c:33)
-==34026==    by 0x109FBF: printer (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A71A: thd_rte (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x485396A: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x4901AC2: start_thread (pthread_create.c:442)
-==34026==    by 0x4992A03: clone (clone.S:100)
-==34026==  Block was alloc'd by thread #2
-==34026== 
-==34026== ---Thread-Announcement------------------------------------------
-==34026== 
-==34026== Thread #1 is the program's root thread
-==34026== 
-==34026== ---Thread-Announcement------------------------------------------
-==34026== 
-==34026== Thread #4 was created
-==34026==    at 0x49929F3: clone (clone.S:76)
-==34026==    by 0x49938EE: __clone_internal (clone-internal.c:83)
-==34026==    by 0x49016D8: create_thread (pthread_create.c:295)
-==34026==    by 0x49021FF: pthread_create@@GLIBC_2.34 (pthread_create.c:828)
-==34026==    by 0x4853767: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A0D3: safe_thread (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A61B: start_simulation (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093E3: main (in /home/wildcat/projets/philo42/philo)
-==34026== 
-==34026== ----------------------------------------------------------------
-==34026== 
-==34026==  Lock at 0x4A99078 was first observed
-==34026==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A001: safe_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A3DF: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a99078 is 56 bytes inside a block of size 112 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A211: safe_malloc (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A301: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Block was alloc'd by thread #1
-==34026== 
-==34026==  Lock at 0x4A99250 was first observed
-==34026==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A001: safe_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A47D: initialisator (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A408: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a99250 is 352 bytes inside a block of size 544 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A25A: safe_malloc (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A3B9: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Block was alloc'd by thread #1
-==34026== 
-==34026==  Lock at 0x4A993B0 was first observed
-==34026==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A001: safe_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A576: initialisator (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A408: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a993b0 is 96 bytes inside a block of size 192 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A2A8: safe_malloc (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A3CA: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Block was alloc'd by thread #1
-==34026== 
-==34026== Possible data race during write of size 4 at 0x4A99064 by thread #1
-==34026== Locks held: 1, at address 0x4A99078
-==34026==    at 0x10AEA2: firewatch (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A661: start_simulation (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093E3: main (in /home/wildcat/projets/philo42/philo)
-==34026== 
-==34026== This conflicts with a previous read of size 4 by thread #4
-==34026== Locks held: 2, at addresses 0x4A99250 0x4A993B0
-==34026==    at 0x1097E0: mtx_table_died (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A881: eat_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A777: eater (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A726: thd_rte (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x485396A: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x4901AC2: start_thread (pthread_create.c:442)
-==34026==    by 0x4992A03: clone (clone.S:100)
-==34026==  Address 0x4a99064 is 36 bytes inside a block of size 112 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A211: safe_malloc (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A301: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Block was alloc'd by thread #1
-==34026== 
-==34026== ----------------------------------------------------------------
-==34026== 
-==34026==  Lock at 0x4A992D8 was first observed
-==34026==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A001: safe_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A47D: initialisator (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A408: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a992d8 is 488 bytes inside a block of size 544 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A25A: safe_malloc (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A3B9: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Block was alloc'd by thread #1
-==34026== 
-==34026==  Lock at 0x4A99350 was first observed
-==34026==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A001: safe_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A576: initialisator (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A408: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a99350 is 0 bytes inside a block of size 192 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A2A8: safe_malloc (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A3CA: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Block was alloc'd by thread #1
-==34026== 
-==34026==  Lock at 0x4A993E0 was first observed
-==34026==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A001: safe_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A576: initialisator (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A408: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a993e0 is 144 bytes inside a block of size 192 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A2A8: safe_malloc (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A3CA: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Block was alloc'd by thread #1
-==34026== 
-==34026==  Lock at 0x4A99078 was first observed
-==34026==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A001: safe_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A3DF: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a99078 is 56 bytes inside a block of size 112 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A211: safe_malloc (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A301: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Block was alloc'd by thread #1
-==34026== 
-==34026== Possible data race during read of size 4 at 0x4A99064 by thread #5
-==34026== Locks held: 3, at addresses 0x4A992D8 0x4A99350 0x4A993E0
-==34026==    at 0x1097E0: mtx_table_died (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A91B: eat_mutex (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A777: eater (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A726: thd_rte (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x485396A: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x4901AC2: start_thread (pthread_create.c:442)
-==34026==    by 0x4992A03: clone (clone.S:100)
-==34026== 
-==34026== This conflicts with a previous write of size 4 by thread #1
-==34026== Locks held: 1, at address 0x4A99078
-==34026==    at 0x10AEA2: firewatch (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A661: start_simulation (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093E3: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Address 0x4a99064 is 36 bytes inside a block of size 112 alloc'd
-==34026==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==34026==    by 0x10A211: safe_malloc (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x10A301: init_philosophers (in /home/wildcat/projets/philo42/philo)
-==34026==    by 0x1093DB: main (in /home/wildcat/projets/philo42/philo)
-==34026==  Block was alloc'd by thread #1
-==34026== 
-==34026== 
-==34026== Use --history-level=approx or =none to gain increased speed, at
-==34026== the cost of reduced accuracy of conflicting-access information
-==34026== For lists of detected and suppressed errors, rerun with: -s
-==34026== ERROR SUMMARY: 170 errors from 5 contexts (suppressed: 237 from 93)
+==198699== Helgrind, a thread error detector
+==198699== Copyright (C) 2007-2017, and GNU GPL'd, by OpenWorks LLP et al.
+==198699== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==198699== Command: ./philo 8 800 200 200
+==198699== 
+==198699== ---Thread-Announcement------------------------------------------
+==198699== 
+==198699== Thread #9 was created
+==198699==    at 0x49929F3: clone (clone.S:76)
+==198699==    by 0x49938EE: __clone_internal (clone-internal.c:83)
+==198699==    by 0x49016D8: create_thread (pthread_create.c:295)
+==198699==    by 0x49021FF: pthread_create@@GLIBC_2.34 (pthread_create.c:828)
+==198699==    by 0x4853767: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
+==198699==    by 0x10A4E4: safe_thread (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x10AA24: start_simulation (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x109451: main (in /home/wildcat/projets/philo42/philo)
+==198699== 
+==198699== ----------------------------------------------------------------
+==198699== 
+==198699== Thread #9 unlocked a not-locked lock at 0x4A99700
+==198699==    at 0x48511E6: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
+==198699==    by 0x10A464: safe_mutex (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x10AE1B: eat_mutex_2 (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x10ACF8: eat_mutex (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x10ABB1: eater (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x10AB60: thd_rte (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x485396A: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
+==198699==    by 0x4901AC2: start_thread (pthread_create.c:442)
+==198699==    by 0x4992A03: clone (clone.S:100)
+==198699==  Lock at 0x4A99700 was first observed
+==198699==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
+==198699==    by 0x10A412: safe_mutex (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x10A981: initialisator (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x10A811: init_philosophers (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x109449: main (in /home/wildcat/projets/philo42/philo)
+==198699==  Address 0x4a99700 is 336 bytes inside a block of size 384 alloc'd
+==198699==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
+==198699==    by 0x10A6B9: safe_malloc (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x10A7D3: init_philosophers (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x109449: main (in /home/wildcat/projets/philo42/philo)
+==198699==  Block was alloc'd by thread #1
+==198699== 
+==198699== 
+==198699== ----------------------------------------------------------------
+==198699== 
+==198699== Thread #9 unlocked a not-locked lock at 0x4A995B0
+==198699==    at 0x48511E6: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
+==198699==    by 0x10A464: safe_mutex (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x10AE30: eat_mutex_2 (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x10ACF8: eat_mutex (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x10ABB1: eater (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x10AB60: thd_rte (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x485396A: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
+==198699==    by 0x4901AC2: start_thread (pthread_create.c:442)
+==198699==    by 0x4992A03: clone (clone.S:100)
+==198699==  Lock at 0x4A995B0 was first observed
+==198699==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
+==198699==    by 0x10A412: safe_mutex (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x10A981: initialisator (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x10A811: init_philosophers (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x109449: main (in /home/wildcat/projets/philo42/philo)
+==198699==  Address 0x4a995b0 is 0 bytes inside a block of size 384 alloc'd
+==198699==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
+==198699==    by 0x10A6B9: safe_malloc (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x10A7D3: init_philosophers (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x109449: main (in /home/wildcat/projets/philo42/philo)
+==198699==  Block was alloc'd by thread #1
+==198699== 
+==198699== 
+==198699== ---Thread-Announcement------------------------------------------
+==198699== 
+==198699== Thread #1 is the program's root thread
+==198699== 
+==198699== ----------------------------------------------------------------
+==198699== 
+==198699== Thread #1's call to pthread_mutex_destroy failed
+==198699==    with error code 16 (EBUSY: Device or resource busy)
+==198699==    at 0x4850B43: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
+==198699==    by 0x109940: ft_free (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x10AAC3: start_simulation (in /home/wildcat/projets/philo42/philo)
+==198699==    by 0x109451: main (in /home/wildcat/projets/philo42/philo)
+==198699== 
+==198699== 
+==198699== Use --history-level=approx or =none to gain increased speed, at
+==198699== the cost of reduced accuracy of conflicting-access information
+==198699== For lists of detected and suppressed errors, rerun with: -s
+==198699== ERROR SUMMARY: 4 errors from 3 contexts (suppressed: 324669 from 34)

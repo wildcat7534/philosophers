@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 23:34:25 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/12 17:09:27 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/12 21:26:41 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # include <pthread.h>
 # include <stdio.h>
+# include <unistd.h>
 # include <stdlib.h>
+# include <string.h>
 # include <sys/time.h> // TODO: remove this peut etre
 # include <time.h>
 # include <unistd.h>
@@ -40,7 +42,6 @@ typedef enum e_malloc
 	MALLOC_PHILOSOPHERS,
 	MALLOC_FORKS,
 	MALLOC_TABLE,
-	MALLOC_PRINTER,
 }			t_smalloc;
 
 typedef enum e_code_mtx
@@ -74,7 +75,6 @@ typedef enum e_status
 }			t_status;
 
 typedef pthread_mutex_t	t_mtx;
-
 
 typedef struct s_forks
 {
@@ -117,7 +117,6 @@ typedef struct s_philo
 	t_forks				*rfork;
 	pthread_mutex_t		philo_mutex;
 	struct s_table		*table;
-	struct s_philo		*next;
 }						t_philo;
 
 typedef struct s_time
@@ -131,20 +130,23 @@ void					*thd_rte(void *data);
 t_table					*init_philosophers(int arc, char **argv);
 void					init_forks(t_table *table);
 int						ft_atoi(const char *str);
+void					ft_itoa(long n, char *str);
+char					*reverse(char *str);
 int						ft_strcmp(const char *s1, const char *s2);
 void					ft_mutex(t_philo *philo, pthread_mutex_t *philo_mutex);
 int						eater(t_philo *philo, int id, long t_start);
 void					print_status(t_philo *philo, char *status, long time);
 long long				get_time_diff(struct timespec start, struct timespec end);
 long					get_elapsed_time_microseconds(struct timeval start, struct timeval end);
-void					ft_usleep(long usec, t_table *table);
+void					ft_usleep(long usec);
 int						error(char *msg);
 int						safe_mutex(t_code_mtx code, t_mtx *mutex);
 int						safe_thread(t_code_thread code, t_philo *philo, void *(*)(void *));
 t_table					*safe_malloc(t_smalloc code, t_table *table);
 long					gettime(t_time_val time_val);
-int						ft_times_up(int time);
 void					firewatch(void *data, long time_start);
+void					printer(long time, int id, char *status);
+
 int						check_argv_positivity(char **argv);
 int						ft_strlen(const char *str);
 void					ft_free(t_table *table);

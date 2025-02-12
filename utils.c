@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 00:37:51 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/12 17:32:19 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/12 21:25:56 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,47 @@ int	ft_atoi(const char *str)
 	}
 	return (nb);
 }
+
+void ft_itoa(long n, char *str)
+{
+    int i = 0;
+    int is_negative = 0;
+
+    if (n == 0) {
+        str[i++] = '0';
+        str[i] = '\0';
+        return;
+    }
+    if (n < 0) {
+        is_negative = 1;
+        n = -n;
+    }
+    while (n != 0) {
+        str[i++] = (n % 10) + '0';
+        n = n / 10;
+    }
+    if (is_negative)
+        str[i++] = '-';
+    str[i] = '\0';
+	str = reverse(str);
+}
+
+char *reverse(char *str)
+{
+	int i = 0;
+	int j = ft_strlen(str) - 1;
+	char temp;
+
+	while (i < j) {
+		temp = str[i];
+		str[i] = str[j];
+		str[j] = temp;
+		i++;
+		j--;
+	}
+	return (str);
+}
+
 
 int	ft_strcmp(const char *s1, const char *s2)
 {

@@ -6,26 +6,11 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 06:35:32 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/12 17:57:41 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/12 21:49:52 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-int	ft_times_up(int time)
-{
-	static struct timeval	start;
-	struct timeval			now;
-	long					elapsed;
-
-	if (start.tv_sec == 0)
-		gettimeofday(&start, NULL);
-	gettimeofday(&now, NULL);
-	elapsed = (now.tv_sec - start.tv_sec) * 1000.0;
-	elapsed += (now.tv_usec - start.tv_usec) / 1000.0;
-	if (elapsed >= time)
-		return (1);
-	return (0);
-}
 
 long	gettime(t_time_val time_val)
 {
@@ -50,13 +35,13 @@ long	get_elapsed_time_microseconds(struct timeval start, struct timeval end)
 		- start.tv_usec);
 }
 
-void	ft_usleep(long usec, t_table *table)
+void	ft_usleep(long usec)
 {
 	long			elapsed;
 	long			rem;
 	struct timeval	start;
 	struct timeval	stop;
-(void)table;
+	
 	elapsed = 0;
 	gettimeofday(&start, NULL);
 	while (elapsed < usec)
@@ -64,7 +49,7 @@ void	ft_usleep(long usec, t_table *table)
 		gettimeofday(&stop, NULL);
 		elapsed = get_elapsed_time_microseconds(start, stop);
 		rem = usec - elapsed;
-		if (rem > 1000)
+		if (rem > 100)
 			usleep(rem / 2);
 /* 		if (elapsed / 1e3 >= mtx_table_tdie(table->philo) * 2)
 		{

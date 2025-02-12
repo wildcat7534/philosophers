@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 20:34:35 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/12 15:54:26 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/12 21:27:05 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,3 +53,49 @@ void	print_status(t_philo *philo, char *status, long time)
 			philo->id, RESET, smiley);
 }
 
+// write a printer with write instead of printf
+// using this base printf("%ld %d is eating\n", gettime(MILLISECOND) - t_start, id);
+/* void printer(long time, int id, char *status)
+{
+	write(1, &time, sizeof(long));
+	write(1, " ", 1);
+	write(1, &id, sizeof(int));
+	write(1, " ", 1);
+	write(1, status, ft_strlen(status));
+} */
+
+void printer(long time, int id, char *status)
+{
+    char buffer[256];
+    int offset = 0;
+    char temp[20];
+
+    // Convert time to string and copy to buffer
+    ft_itoa(time, temp);
+    int len = strlen(temp);
+    memcpy(buffer + offset, temp, len);
+    offset += len;
+
+    // Add space
+    buffer[offset++] = ' ';
+
+    // Convert id to string and copy to buffer
+    ft_itoa(id, temp);
+    len = strlen(temp);
+    memcpy(buffer + offset, temp, len);
+    offset += len;
+
+    // Add space
+    buffer[offset++] = ' ';
+
+    // Copy status to buffer
+    len = ft_strlen(status);
+    memcpy(buffer + offset, status, len);
+    offset += len;
+
+    // Add newline
+    buffer[offset++] = '\n';
+
+    // Write the buffer to stdout
+    write(1, buffer, offset);
+}

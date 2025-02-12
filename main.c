@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 01:03:59 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/11 20:44:58 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/12 21:44:44 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int arc, char **argv)
 {
-
+	long t_start = gettime(MILLISECOND);
 	if (arc < 5 || arc > 6 || check_argv_positivity(argv))
 	{
 		printf("Usage: [%sPhilo%s] [%sdie%s] [%seat%s] [%ssleep%s] [%smeal%s]\n",
@@ -30,7 +30,7 @@ int	main(int arc, char **argv)
 		printf("(MAIN) Error: simulation failed\n");
 		return (1);
 	}
-	//printf("MAIN : Simulation ended : %ld\n", gettime(MILLISECOND));
+	printf("MAIN : Simulation ended : %ld\n", gettime(MILLISECOND) - t_start);
 	return (0);
 }
 
