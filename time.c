@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 06:35:32 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/12 01:30:46 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/12 17:57:41 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ long	gettime(t_time_val time_val)
 {
 	struct timeval	time;
 
-	gettimeofday(&time, NULL);
+	if (gettimeofday(&time, NULL) == -1)
+		error("gettimeofday failed");
 	if (time_val == SECOND)
 		return (time.tv_sec + (time.tv_usec / 1e6));
 	else if (time_val == MILLISECOND)
@@ -45,7 +46,7 @@ long	gettime(t_time_val time_val)
 
 long	get_elapsed_time_microseconds(struct timeval start, struct timeval end)
 {
-	return (end.tv_sec - start.tv_sec) * 1000000L + (end.tv_usec
+	return (end.tv_sec - start.tv_sec) * 1e6 + (end.tv_usec
 		- start.tv_usec);
 }
 

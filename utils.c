@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 00:37:51 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/12 01:20:35 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/12 17:32:19 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,47 +89,38 @@ void	ft_free(t_table *table)
 	free(table);
 }
 
-int mtx_died(t_philo *philo)
+unsigned int mtx_read_id(t_philo *philo)
 {
-	int	p_died;
+	unsigned int	id;
 	safe_mutex(LOCK, &philo->philo_mutex);
-	p_died = philo->died;
+	id = philo->id;
 	safe_mutex(UNLOCK, &philo->philo_mutex);
-	return (p_died);
+	return (id);
 }
 
-int mtx_table_died(t_philo *philo)
+long mtx_p_t_start(t_philo *philo)
 {
-	int	t_died;
+	long	t_start;
 	safe_mutex(LOCK, &philo->philo_mutex);
-	t_died = philo->table->philo_died;
+	t_start = philo->t_start;
 	safe_mutex(UNLOCK, &philo->philo_mutex);
-	return (t_died);
+	return (t_start);
 }
 
-int mtx_table_maxmeals(t_philo *philo)
+int mtx_stop_sim_read(t_philo *philo)
 {
-	int	t_maxmeals;
+	int	stop_sim;
 	safe_mutex(LOCK, &philo->philo_mutex);
-	t_maxmeals = philo->table->meals_max;
+	stop_sim = philo->stop_simulation;
 	safe_mutex(UNLOCK, &philo->philo_mutex);
-	return (t_maxmeals);
+	return (stop_sim);
 }
-int	mtx_nb_philo(t_philo *philo)
+
+void mtx_stop_sim_write(t_philo *philo)
 {
-	int	nb_philo;
 	safe_mutex(LOCK, &philo->philo_mutex);
-	nb_philo = philo->table->nb_philo;
+	philo->stop_simulation = 1;
 	safe_mutex(UNLOCK, &philo->philo_mutex);
-	return (nb_philo);
-}
-long mtx_table_tdie(t_philo *philo)
-{
-	int	t_die;
-	safe_mutex(LOCK, &philo->philo_mutex);
-	t_die = philo->table->time_die;
-	safe_mutex(UNLOCK, &philo->philo_mutex);
-	return (t_die);
 }
 
 int mtx_meal_eat_philo(t_philo *philo)
@@ -139,4 +130,52 @@ int mtx_meal_eat_philo(t_philo *philo)
 	meal_eat = philo->meals_eaten;
 	safe_mutex(UNLOCK, &philo->philo_mutex);
 	return (meal_eat);
+}
+
+long mtx_last_meal_time(t_philo *philo)
+{
+	long	last_meal_time;
+	safe_mutex(LOCK, &philo->philo_mutex);
+	last_meal_time = philo->last_meal_time;
+	safe_mutex(UNLOCK, &philo->philo_mutex);
+	return (last_meal_time);
+}
+
+int mtx_p_max_meals(t_philo *philo)
+{
+	int	p_max_meals;
+	safe_mutex(LOCK, &philo->philo_mutex);
+	p_max_meals = philo->meals_max;
+	safe_mutex(UNLOCK, &philo->philo_mutex);
+	return (p_max_meals);
+}
+
+
+// TABLE MUTEX /////////////////////////////////////////////
+
+int mtx_table_maxmeals(t_table *table)
+{
+	int	t_max_meals;
+	safe_mutex(LOCK, &table->table_mutex);
+	t_max_meals = table->meals_max;
+	safe_mutex(UNLOCK, &table->table_mutex);
+	return (t_max_meals);
+}
+
+int	mtx_tnb_philo(t_table *table)
+{
+	int	t_nb_philo;
+	safe_mutex(LOCK, &table->table_mutex);
+	t_nb_philo = table->nb_philo;
+	safe_mutex(UNLOCK, &table->table_mutex);
+	return (t_nb_philo);
+}
+
+long mtx_table_tdie(t_table *table)
+{
+	long	t_die;
+	safe_mutex(LOCK, &table->table_mutex);
+	t_die = table->time_die;
+	safe_mutex(UNLOCK, &table->table_mutex);
+	return (t_die);
 }

@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 23:44:18 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/11 20:42:16 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/12 15:52:57 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,14 @@ static void	initialisator(t_table *table)
 		philo->meals_max = table->meals_max;
 		philo->meals_eaten = 0;
 		philo->died = 0;
+		philo->stop_simulation = 0;
 		philo->last_meal_time = gettime(MILLISECOND) - table->t_start;
 		philo->lfork = &table->forks[i];
 		philo->rfork = &table->forks[(i + 1) % table->nb_philo];
 		safe_mutex(INIT, &philo->lfork->fork_mutex);
 		philo->lfork->fork_id = i;
+		philo->t_start = table->t_start;	
 		philo->table = table;
+
 	}
 }

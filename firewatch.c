@@ -6,82 +6,77 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:40:40 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/12 01:35:32 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/12 17:09:30 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 static int	all_eaten(t_table *table);
+static void all_stop_simulation(t_table *table);
 
 void	firewatch(void *data, long time_start)
 {
 	t_table	*table;
 	int		i;
 	int 	j;
+	int		k;
 	long	t_eat;
 	int		eaten;
-	int		k;
-	int		dead;
 	long	t_die;
+	int		nb_philo;
+	int		end_simulation;
+	
 	table = (t_table *)data;
-
-	j = 0;
+	end_simulation = 0;
+	nb_philo = mtx_tnb_philo(table);
+	t_die = mtx_table_tdie(table);
+	eaten = mtx_table_maxmeals(table);
+	
 	//printf("****************Firewatch started*******************************\n");
-	while (!table->philo_died)
+	while (!end_simulation)
 	{
 		i = -1;
-        dead = 0;
-        k = 0;
-		t_die = 0;
-		while (++i < table->nb_philo)
+		while (++i < nb_philo)
 		{
-                safe_mutex(LOCK, &table->philo[i].philo_mutex);
-                t_eat = table->philo[i].last_meal_time;
-                safe_mutex(UNLOCK, &table->philo[i].philo_mutex);
-/*                 safe_mutex(LOCK, &table->philo[i].philo_mutex);
-                eaten = table->philo[i].meals_eaten;
-                safe_mutex(UNLOCK, &table->philo[i].philo_mutex); */
-                safe_mutex(LOCK, &table->philo[i].philo_mutex);
-                dead = table->philo[i].died;
-                safe_mutex(UNLOCK, &table->philo[i].philo_mutex);
-                safe_mutex(LOCK, &table->philo[i].philo_mutex);
-				t_die = table->philo[i].time_die;
-                safe_mutex(UNLOCK, &table->philo[i].philo_mutex);
-				if ((gettime(MILLISECOND) - t_eat >= t_die && t_eat != 0) || dead == 1)
+				t_eat = mtx_last_meal_time(&table->philo[i]);
+
+				if ((gettime(MILLISECOND) - t_eat >= t_die && t_eat != 0))
 				{
-					safe_mutex(LOCK, &table->philo[i].philo_mutex);
-					table->philo[i].died = 1;
-					printf("%ld %d died\n", gettime(MILLISECOND) - time_start, table->philo[i].id);
-					safe_mutex(UNLOCK, &table->philo[i].philo_mutex);
-					safe_mutex(LOCK, &table->table_mutex);
-					table->philo_died = 1;
-					safe_mutex(UNLOCK, &table->table_mutex);
+					printf("%ld %d died\n", gettime(MILLISECOND) - time_start, mtx_read_id(&table->philo[i]));
+					all_stop_simulation(table);
+					end_simulation = 1;
+					//table->philo[i].died = 1;
 					//ft_usleep(420, table);
 					//printf("%sFIREWATCH [Philo : %d died]%s\n", RED, table->philo[i].id, RESET);
 					//printf("Philo %d           [%slast meal time %ld%s]\n", table->philo[i].id, RED, gettime(MILLISECOND) - t_eat, RESET);
 					break;
 				}
-				else if (eaten != 0 && eaten >= mtx_table_maxmeals(table->philo) && mtx_table_maxmeals(table->philo) != 0)
+				else if (eaten != 0)
 				{
-                    j = 0;
-					while (j < mtx_nb_philo(table->philo))
+                    j = -1;
+					while (++j < nb_philo)
 					{					
-						if ( all_eaten(table) == 1 && k < mtx_nb_philo(table->philo))
+						if ( all_eaten(table) == 1)
                         {
-                            k = 0;
-                            table->philo_died = 1;
-                            table->philo[j].died = 1;
-                            while (k < table->nb_philo)
-                            {
-                                printf("Philo: [%d] eat [%d] meals\n", table->philo[k].id, eaten);
-                                k++;
-                            }
-                            printf("%sFIREWATCH [Philo ALL EATEN]%s\n", GREEN, RESET);
-                            i = k;
+							
+							//table->philo_died = 1;
+                            //table->philo[j].died = 1;
+							all_stop_simulation(table);
+							return ;
+							//j = nb_philo;
+							///DEBUG PRINT////////////////////////
+								k = 0;
+								while (k < table->nb_philo)
+								{
+									eaten = mtx_meal_eat_philo(&table->philo[k]);
+									int id = mtx_read_id(&table->philo[k]);
+									printf("Philo: [%d] eat [%d] meals\n", id, eaten);
+									k++;
+								}
+								printf("%sFIREWATCH [Philo ALL EATEN]%s\n", GREEN, RESET);
+							///DEBUG PRINT////////////////////////
                         }
-                        else 
-    						j++;
 					}
 			}
 		}
@@ -92,17 +87,25 @@ void	firewatch(void *data, long time_start)
 static int	all_eaten(t_table *table)
 {
 	int	i;
-
+	int max_meals;
+	int nb_philo;
 	i = -1;
-	while (++i < mtx_nb_philo(table->philo))
+	
+	nb_philo = mtx_tnb_philo(table);
+	max_meals = mtx_table_maxmeals(table);
+	while (++i < nb_philo)
 	{
-		safe_mutex(LOCK, &table->philo[i].philo_mutex);
-		if (table->philo[i].meals_eaten < mtx_table_maxmeals(table->philo))
-		{
-			safe_mutex(UNLOCK, &table->philo[i].philo_mutex);
+		if (mtx_meal_eat_philo(&table->philo[i]) < max_meals)
 			return (0);
-		}
-		safe_mutex(UNLOCK, &table->philo[i].philo_mutex);
 	}
 	return (1);
+}
+
+static void all_stop_simulation(t_table *table)
+{
+	int	i;
+	int nb_philo = mtx_tnb_philo(table);
+	i = -1;
+	while (++i < nb_philo)
+		mtx_stop_sim_write(&table->philo[i]);
 }
