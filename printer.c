@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 20:34:35 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/12 21:27:05 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/12 23:36:51 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	print_status(t_philo *philo, char *status, long time)
 	write(1, status, ft_strlen(status));
 } */
 
-void printer(long time, int id, char *status)
+void printer(unsigned int time, int id, char *status)
 {
     char buffer[256];
     int offset = 0;

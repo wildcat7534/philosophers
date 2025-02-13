@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 00:37:51 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/12 22:15:09 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/13 15:23:24 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,26 +48,19 @@ int	ft_atoi(const char *str)
 	return (nb);
 }
 
-void ft_itoa(long n, char *str)
+void ft_itoa(unsigned int n, char *str)
 {
     int i = 0;
-    int is_negative = 0;
 
     if (n == 0) {
         str[i++] = '0';
         str[i] = '\0';
         return;
     }
-    if (n < 0) {
-        is_negative = 1;
-        n = -n;
-    }
     while (n != 0) {
         str[i++] = (n % 10) + '0';
         n = n / 10;
     }
-    if (is_negative)
-        str[i++] = '-';
     str[i] = '\0';
 	str = reverse(str);
 }
@@ -191,6 +184,15 @@ int mtx_p_max_meals(t_philo *philo)
 	return (p_max_meals);
 }
 
+int mtx_pnb_philo(t_philo *philo)
+{
+	int	p_nb_philo;
+	safe_mutex(LOCK, &philo->philo_mutex);
+	p_nb_philo = philo->nb_philo;
+	safe_mutex(UNLOCK, &philo->philo_mutex);
+	return (p_nb_philo);
+}
+
 // TABLE MUTEX /////////////////////////////////////////////
 
 int mtx_table_maxmeals(t_table *table)
@@ -218,4 +220,12 @@ long mtx_table_tdie(t_table *table)
 	t_die = table->time_die;
 	safe_mutex(UNLOCK, &table->table_mutex);
 	return (t_die);
+}
+int mtx_table_teat(t_table *table)
+{
+	int	t_eat;
+	safe_mutex(LOCK, &table->table_mutex);
+	t_eat = table->time_eat;
+	safe_mutex(UNLOCK, &table->table_mutex);
+	return (t_eat);
 }

@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:40:40 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/12 17:09:30 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/13 15:43:55 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,44 +37,55 @@ void	firewatch(void *data, long time_start)
 	while (!end_simulation)
 	{
 		i = -1;
+		if (nb_philo == 1)
+		{
+			t_eat = mtx_last_meal_time(&table->philo[0]);
+			if ((gettime(MILLISECOND) - time_start) - t_eat >= t_die)
+			{
+				printf("%ld %d died\n", gettime(MILLISECOND) - time_start, mtx_read_id(&table->philo[0]));
+				all_stop_simulation(table);
+				end_simulation = 1;
+			}
+		}
 		while (++i < nb_philo)
 		{
+				
 				t_eat = mtx_last_meal_time(&table->philo[i]);
-
+				ft_usleep(420);
+				///printf("Philo %d [%ld] last meal time %ld\n", mtx_read_id(&table->philo[i]), gettime(MILLISECOND) - time_start, gettime(MILLISECOND) - t_eat);
 				if ((gettime(MILLISECOND) - t_eat >= t_die && t_eat != 0))
 				{
 					printf("%ld %d died\n", gettime(MILLISECOND) - time_start, mtx_read_id(&table->philo[i]));
 					all_stop_simulation(table);
 					end_simulation = 1;
 					//table->philo[i].died = 1;
-					//ft_usleep(420, table);
 					//printf("%sFIREWATCH [Philo : %d died]%s\n", RED, table->philo[i].id, RESET);
 					//printf("Philo %d           [%slast meal time %ld%s]\n", table->philo[i].id, RED, gettime(MILLISECOND) - t_eat, RESET);
 					break;
 				}
 				else if (eaten != 0)
 				{
-                    j = -1;
+					j = -1;
 					while (++j < nb_philo)
 					{					
+						ft_usleep(100);
 						if ( all_eaten(table) == 1)
                         {
 							
 							//table->philo_died = 1;
                             //table->philo[j].died = 1;
-							all_stop_simulation(table);
-							return ;
 							//j = nb_philo;
 							///DEBUG PRINT////////////////////////
-								k = 0;
-								while (k < table->nb_philo)
-								{
-									eaten = mtx_meal_eat_philo(&table->philo[k]);
-									int id = mtx_read_id(&table->philo[k]);
-									printf("Philo: [%d] eat [%d] meals\n", id, eaten);
-									k++;
-								}
-								printf("%sFIREWATCH [Philo ALL EATEN]%s\n", GREEN, RESET);
+							k = -1;
+							while (++k < table->nb_philo)
+							{
+								eaten = mtx_meal_eat_philo(&table->philo[k]);
+								int id = mtx_read_id(&table->philo[k]);
+								printf("Philo: [%d] eat [%d] meals\n", id, eaten);
+							}
+							printf("%sFIREWATCH [Philo ALL EATEN]%s\n", GREEN, RESET);
+							all_stop_simulation(table);
+							return ;
 							///DEBUG PRINT////////////////////////
                         }
 					}

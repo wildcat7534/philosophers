@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 06:35:32 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/12 21:49:52 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/12 23:29:11 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ void	ft_usleep(long usec)
 		gettimeofday(&stop, NULL);
 		elapsed = get_elapsed_time_microseconds(start, stop);
 		rem = usec - elapsed;
-		if (rem > 100)
+		if (rem > 1000)
 			usleep(rem / 2);
-/* 		if (elapsed / 1e3 >= mtx_table_tdie(table->philo) * 2)
+/* 		if (elapsed / 1e3 >= mtx_table_tdie(table) * 2)
 		{
 			safe_mutex(LOCK, &table->table_mutex);
 			printf("TIME UP !!!(%ld) Philo %d died\n", elapsed, table->philo->id);

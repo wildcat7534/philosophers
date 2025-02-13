@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 23:34:25 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/12 21:26:41 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/13 15:24:55 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_philo
 	unsigned int		time_sleep;
 	int					meals_max;
 	int					meals_eaten;
+	int					nb_philo;
 	int					died;
 	struct timeval		t_meal;
 	long				last_meal_time;
@@ -129,13 +130,10 @@ int						start_simulation(t_table *table);
 void					*thd_rte(void *data);
 t_table					*init_philosophers(int arc, char **argv);
 void					init_forks(t_table *table);
-int						ft_atoi(const char *str);
-void					ft_itoa(long n, char *str);
-char					*reverse(char *str);
 int						ft_strcmp(const char *s1, const char *s2);
 void					ft_mutex(t_philo *philo, pthread_mutex_t *philo_mutex);
 int						eater(t_philo *philo, int id, long t_start);
-void					print_status(t_philo *philo, char *status, long time);
+void					print_status(t_philo *philo, char *status, long time); /// TO DO DEBUG
 long long				get_time_diff(struct timespec start, struct timespec end);
 long					get_elapsed_time_microseconds(struct timeval start, struct timeval end);
 void					ft_usleep(long usec);
@@ -145,14 +143,16 @@ int						safe_thread(t_code_thread code, t_philo *philo, void *(*)(void *));
 t_table					*safe_malloc(t_smalloc code, t_table *table);
 long					gettime(t_time_val time_val);
 void					firewatch(void *data, long time_start);
-void					printer(long time, int id, char *status);
+void					printer(unsigned int time, int id, char *status);
 
+// UTILS
+int						ft_atoi(const char *str);
+void					ft_itoa(unsigned int n, char *str);
+char					*reverse(char *str);
 int						check_argv_positivity(char **argv);
 int						ft_strlen(const char *str);
 void					ft_free(t_table *table);
-int						mtx_died(t_philo *philo);
-int						mtx_meal_eat_philo(t_philo *philo);
-unsigned int			mtx_read_id(t_philo *philo);
+
 // MTX PHILO
 unsigned int 			mtx_read_id(t_philo *philo);
 long					mtx_p_t_start(t_philo *philo);
@@ -161,9 +161,12 @@ void					mtx_stop_sim_write(t_philo *philo);
 int						mtx_meal_eat_philo(t_philo *philo);
 long					mtx_last_meal_time(t_philo *philo);
 int						mtx_p_max_meals(t_philo *philo);
+int						mtx_pnb_philo(t_philo *philo);
+
 // MTX TABLE
 int						mtx_table_maxmeals(t_table *table);
 int						mtx_tnb_philo(t_table *table);
 long					mtx_table_tdie(t_table *table);
+int						mtx_table_teat(t_table *table);
 
 #endif
