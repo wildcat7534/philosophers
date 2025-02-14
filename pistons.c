@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 21:54:00 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/13 15:45:07 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/14 16:48:43 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*thd_rte(void *data)
 	meal_max = mtx_p_max_meals(philo);
 	t_start = mtx_p_t_start(philo);
 	if (id % 2 == 0 )
-		ft_usleep((philo->time_eat) * 1000);
+		ft_usleep(((philo->time_eat) * 1000));
 	while (!mtx_stop_sim_read(philo))
 	{
 		if (meal_max != 0)
@@ -36,12 +36,8 @@ void	*thd_rte(void *data)
 				break;
 		}
 		printer(gettime(MILLISECOND) - t_start, id, "is thinking");
-		if (eater(philo, id, t_start) && mtx_stop_sim_read(philo))
-		{
-			///printf(mtx_stop_sim_read(philo) ? "true\n" : "false\n");
-			//printf("philo %d end thread..\n", id);
+		if (eater(philo, id, t_start) || mtx_stop_sim_read(philo))
 			return (NULL);
-		}
 	}
 	return (NULL);
 }
@@ -65,14 +61,10 @@ static int	eat_mutex(t_philo *philo, int id, long t_start)
 		if (safe_mutex(LOCK, &philo->lfork->fork_mutex) != 0)
 			return (1);
 		printer(gettime(MILLISECOND) - t_start, id, "has taken a fork");
-		//printf("mtx_nb_philo = %d\n", mtx_pnb_philo(philo));
 		if (mtx_pnb_philo(philo) == 1)
 		{
 			safe_mutex(UNLOCK, &philo->lfork->fork_mutex);
-			//printer(gettime(MILLISECOND) - t_start, id, "has give Lfork");
-			//printf(mtx_stop_sim_read(philo) ? "true\n" : "false\n");
 			ft_usleep(philo->time_die * 1000);
-			//printf(mtx_stop_sim_read(philo) ? "true\n" : "false\n");
 			return (1);
 		}
 		if (safe_mutex(LOCK, &philo->rfork->fork_mutex) != 0)
