@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 21:54:00 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/16 21:36:35 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/16 22:48:50 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ void	*thd_rte(void *data)
 	meal_max = mtx_p_max_meals(philo);
 	t_start = mtx_p_t_start(philo);
 	if (id % 2 == 0)
-		ft_usleep((m_t_peat(philo)), philo->table);
+		ft_usleep(m_t_peat(philo), philo->table);
+	if (mtx_pnb_philo(philo) % 2 == 0)
+		ft_usleep(m_tdie(philo) / 2 - 100, philo->table);
 	while (!m_stop_r(philo))
 	{
 		if (meal_max != 0)
@@ -71,7 +73,7 @@ static int	eat_mutex(t_philo *philo, int id, long t_start)
 			ft_usleep(philo->time_die, philo->table);
 			return (1);
 		}
-		ft_usleep(10, philo->table);
+		//ft_usleep(10, philo->table);
 		if (m_stop_r(philo))
 		{
 			safe_mutex(UNLOCK, &philo->lfork->fork_mutex);

@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 23:34:25 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/16 19:51:15 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/16 22:28:10 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ long					mtx_last_meal_time(t_philo *philo);
 int						mtx_p_max_meals(t_philo *philo);
 int						mtx_pnb_philo(t_philo *philo);
 long					m_t_peat(t_philo *philo);
+long					m_tdie(t_philo *philo);
 // MTX TABLE
 int						mtx_table_maxmeals(t_table *table);
 int						mtx_tnb_philo(t_table *table);

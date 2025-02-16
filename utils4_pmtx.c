@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:53:04 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/16 08:14:15 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/16 22:03:09 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,14 @@ long	m_t_peat(t_philo *philo)
 	t_eat = philo->time_eat;
 	safe_mutex(UNLOCK, &philo->philo_mutex);
 	return (t_eat);
+}
+
+long	m_tdie(t_philo *philo)
+{
+	long	t_die;
+
+	safe_mutex(LOCK, &philo->philo_mutex);
+	t_die = philo->time_die;
+	safe_mutex(UNLOCK, &philo->philo_mutex);
+	return (t_die);
 }

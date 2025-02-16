@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 20:34:35 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/16 20:47:38 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/16 23:18:18 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	fprinter(long time, int id, char *status, t_table *table)
 	buffer[len] = '\0';
 	table->printer->status = buffer;
 */
+		long timestamp = gettime(MILLISECOND);
 	safe_mutex(LOCK, &table->table_mutex);
 	int stop_sim = table->stop_simulation;
 	//safe_mutex(UNLOCK, &table->table_mutex);
@@ -77,9 +78,8 @@ void	fprinter(long time, int id, char *status, t_table *table)
 			m_die_w(table);
 			all_stop_simulation(table);
 			//ft_usleep(1000, table);
-			
 			safe_mutex(LOCK, &table->printer->p_mutex);
-			printf("%ld %d %s\n", gettime(MILLISECOND) - time, id, status);
+			printf("%ld %d %s\n", timestamp - time, id, status);
 			//write(1, table->printer->status, offset);
 			safe_mutex(UNLOCK, &table->printer->p_mutex);
 		}
@@ -91,6 +91,5 @@ void	fprinter(long time, int id, char *status, t_table *table)
 			safe_mutex(UNLOCK, &table->printer->p_mutex);
 		}
 	}
-
 }
 	
