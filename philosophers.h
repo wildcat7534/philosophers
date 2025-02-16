@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 23:34:25 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/16 18:40:44 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/16 19:51:15 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_printer
 {
 	pthread_mutex_t		p_mutex;
 	char				*status;
+	char				*buffer;
 }						t_printer;
 
 typedef struct s_forks

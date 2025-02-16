@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:54:12 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/16 18:38:59 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/16 20:21:20 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ int	m_if_die_r(t_table *table)
 	return (t_die);
 }
 
-
 void m_die_w(t_table *table)
 {
 	safe_mutex(LOCK, &table->table_mutex);
 	table->philo_died = 1;
 	safe_mutex(UNLOCK, &table->table_mutex);
 }
+

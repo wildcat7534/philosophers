@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 06:35:32 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/16 18:03:12 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/16 19:22:03 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	ft_usleep(long usec, t_table *table)
 		if (usec >= t_die || m_tsleep(table) >= t_die || m_teat(table) >= t_die)
 		{
 			//printf("%ld %d T died\n", gettime(MILLISECOND) - table->t_start, m_id(&table->philo[0]));
-			table->philo_died = 1;
+			//m_die_w(table);
+			//table->philo_died = 1;
 			usleep(t_die);
 			all_stop_simulation(table);
 			return ;

@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 21:54:00 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/16 16:29:20 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/16 21:36:35 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	*thd_rte(void *data)
 				break ;
 		}
 		//printer(gettime(MILLISECOND) - t_start, id, "is thinking", philo->table);
-		fprinter(t_start, id, "is eating", philo->table);
+		fprinter(t_start, id, "is thinking", philo->table);
 		if (eater(philo, id, t_start) || m_stop_r(philo))
 			return (NULL);
 	}
@@ -71,7 +71,7 @@ static int	eat_mutex(t_philo *philo, int id, long t_start)
 			ft_usleep(philo->time_die, philo->table);
 			return (1);
 		}
-		ft_usleep(100, philo->table);
+		ft_usleep(10, philo->table);
 		if (m_stop_r(philo))
 		{
 			safe_mutex(UNLOCK, &philo->lfork->fork_mutex);
