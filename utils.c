@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 00:37:51 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/14 16:54:36 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/16 08:12:09 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,30 +48,36 @@ int	ft_atoi(const char *str)
 	return (nb);
 }
 
-void ft_itoa(unsigned int n, char *str)
+void	ft_itoa(unsigned int n, char *str)
 {
-    int i = 0;
+	int	i;
 
-    if (n == 0) {
-        str[i++] = '0';
-        str[i] = '\0';
-        return;
-    }
-    while (n != 0) {
-        str[i++] = (n % 10) + '0';
-        n = n / 10;
-    }
-    str[i] = '\0';
+	i = 0;
+	if (n == 0)
+	{
+		str[i++] = '0';
+		str[i] = '\0';
+		return ;
+	}
+	while (n != 0)
+	{
+		str[i++] = (n % 10) + '0';
+		n = n / 10;
+	}
+	str[i] = '\0';
 	str = reverse(str);
 }
 
-char *reverse(char *str)
+char	*reverse(char *str)
 {
-	int i = 0;
-	int j = ft_strlen(str) - 1;
-	char temp;
+	int		i;
+	int		j;
+	char	temp;
 
-	while (i < j) {
+	i = 0;
+	j = ft_strlen(str) - 1;
+	while (i < j)
+	{
 		temp = str[i];
 		str[i] = str[j];
 		str[j] = temp;
@@ -80,7 +86,6 @@ char *reverse(char *str)
 	}
 	return (str);
 }
-
 
 int	ft_strcmp(const char *s1, const char *s2)
 {

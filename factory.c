@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 06:25:48 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/12 01:08:30 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/16 12:46:24 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,13 @@ int	safe_mutex(t_code_mtx code, t_mtx *mutex)
 	return (0);
 }
 
-int	safe_thread(t_code_thread code, t_philo *philo,
-		void *(*thd_rte)(void *))
+int	s_thd(t_c_th code, t_philo *philo, void *(*thd_rte)(void *))
 {
 	if (code == CREATE)
 	{
 		if (pthread_create(&philo->tid, NULL, thd_rte, philo) != 0)
 		{
-			printf("%s>ERROR : THREAD [%ld]%s CREATE failed\n", RED, philo->tid,  RESET);
+			printf("%sTHREAD [%ld]%s CREATE failed\n", RED, philo->tid, RT);
 			return (error("thread creation failed"));
 		}
 	}
@@ -52,7 +51,7 @@ int	safe_thread(t_code_thread code, t_philo *philo,
 	{
 		if (pthread_join(philo->tid, NULL) != 0)
 		{
-			printf("%s ERROR : THREAD [%ld]%s JOIN failed\n", RED, philo->tid,  RESET);
+			printf("%sTHREAD [%ld]%s JOIN failed\n", RED, philo->tid, RT);
 			return (error("thread join failed"));
 		}
 	}
@@ -60,7 +59,7 @@ int	safe_thread(t_code_thread code, t_philo *philo,
 	{
 		if (pthread_detach(philo->tid) != 0)
 		{
-			printf("%s ERROR : THREAD [%ld]%s DETACH failed\n", RED, philo->tid,  RESET);
+			printf("%sTHREAD [%ld]%s DETACH failed\n", RED, philo->tid, RT);
 			return (error("thread detach failed"));
 		}
 	}
@@ -86,6 +85,12 @@ t_table	*safe_malloc(t_smalloc code, t_table *table)
 		table->forks = malloc(sizeof(t_forks) * table->nb_philo);
 		if (table->forks == NULL)
 			error("malloc forks failed");
+	}
+	else if (code == MALLOC_PRINTER)
+	{
+		table->printer = malloc(sizeof(t_printer));
+		if (table->printer == NULL)
+			error("malloc printer failed");
 	}
 	return (table);
 }

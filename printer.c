@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 20:34:35 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/12 23:36:51 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/16 18:34:25 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,88 +14,63 @@
 
 int	error(char *msg)
 {
-	printf("[%sError: %s%s]\n", RED, msg, RESET);
+	printf("[%sError: %s%s]\n", RED, msg, RT);
 	return (1);
 }
 
-void	print_status(t_philo *philo, char *status, long time)
+void	fprinter(long time, int id, char *status, t_table *table)
 {
-	char *smiley;
-	time = time - philo->table->t_start;
+	char	buffer[256];
+	int		offset;
+	char	temp[20];
+	int		len;
 
-	if (ft_strcmp(status, "is eating") == 0)
-		smiley = "😋🍽️";
-	else if (ft_strcmp(status, "is sleeping") == 0)
-		smiley = "😴";
-	else if (ft_strcmp(status, "is thinking") == 0)
-		smiley = "🤔";
-	else if (ft_strcmp(status, "has died") == 0)
-		smiley = "💀";
-	else
-		smiley = "🤷";
-	if (philo->id == 1)
-		printf("%ld : %sPhilosopher%s [%s%d%s] %s\n", time, BRED, RESET, RED,
-			philo->id, RESET, smiley);
-	else if (philo->id == 2)
-		printf("%ld : %sPhilosopher%s [%s%d%s] %s\n", time, BGREEN, RESET, GREEN,
-			philo->id, RESET, smiley);
-	else if (philo->id == 3)
-		printf("%ld : %sPhilosopher%s [%s%d%s] %s\n", time, BBLUE, RESET, BLUE,
-			philo->id, RESET, smiley);
-	else if (philo->id == 4)
-		printf("%ld : %sPhilosopher%s [%s%d%s] %s\n", time, BPURPLE, RESET, PURPLE,
-			philo->id, RESET, smiley);
-	else if (philo->id == 5)
-		printf("%ld : %sPhilosopher%s [%s%d%s] %s\n", time, BCYAN, RESET, CYAN,
-			philo->id, RESET, smiley);
-	else
-		printf("%ld : %sPhilosopher%s [%s%d%s] %s\n", time, BYELLOW, RESET, YELLOW,
-			philo->id, RESET, smiley);
+	
+	offset = 0;
+	ft_itoa(gettime(MILLISECOND) - time, temp);
+	len = strlen(temp);
+	memcpy(buffer + offset, temp, len);
+	offset += len;
+	buffer[offset++] = ' ';
+	ft_itoa(id, temp);
+	len = strlen(temp);
+	memcpy(buffer + offset, temp, len);
+	offset += len;
+	buffer[offset++] = ' ';
+	len = ft_strlen(status);
+	memcpy(buffer + offset, status, len);
+	offset += len;
+	buffer[offset++] = '\n';
+
+	
+	if (table->philo_died == 0 || table->stop_simulation == 0 || table->nb_philo == 1)
+	{
+		safe_mutex(LOCK, &table->printer->p_mutex);
+		//printf("%ld %d %s\n", gettime(MILLISECOND) - time, id, status);
+		if (ft_strcmp(status, "died") == 0)
+		{
+			m_die_w(table);
+			all_stop_simulation(table);
+			ft_usleep(1000, table);
+			write(1, buffer, offset);
+			safe_mutex(UNLOCK, &table->printer->p_mutex);
+		}
+		else
+		{
+			write(1, buffer, offset);
+			safe_mutex(UNLOCK, &table->printer->p_mutex);
+		}
+	}
 }
 
-// write a printer with write instead of printf
-// using this base printf("%ld %d is eating\n", gettime(MILLISECOND) - t_start, id);
-/* void printer(long time, int id, char *status)
+/*void	fprinter(long time, int id, char *status, t_table *table)
 {
-	write(1, &time, sizeof(long));
-	write(1, " ", 1);
-	write(1, &id, sizeof(int));
-	write(1, " ", 1);
-	write(1, status, ft_strlen(status));
-} */
+	int len = ft_strlen(status);
+	char *buffer = malloc(len + 1);
+	memcpy(buffer, status, len);
+	buffer[len] = '\0';
+	table->printer->status = buffer;
 
-void printer(unsigned int time, int id, char *status)
-{
-    char buffer[256];
-    int offset = 0;
-    char temp[20];
 
-    // Convert time to string and copy to buffer
-    ft_itoa(time, temp);
-    int len = strlen(temp);
-    memcpy(buffer + offset, temp, len);
-    offset += len;
-
-    // Add space
-    buffer[offset++] = ' ';
-
-    // Convert id to string and copy to buffer
-    ft_itoa(id, temp);
-    len = strlen(temp);
-    memcpy(buffer + offset, temp, len);
-    offset += len;
-
-    // Add space
-    buffer[offset++] = ' ';
-
-    // Copy status to buffer
-    len = ft_strlen(status);
-    memcpy(buffer + offset, status, len);
-    offset += len;
-
-    // Add newline
-    buffer[offset++] = '\n';
-
-    // Write the buffer to stdout
-    write(1, buffer, offset);
-}
+}*/
+	

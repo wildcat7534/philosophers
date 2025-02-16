@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 23:34:25 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/13 15:24:55 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/16 18:40:44 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,14 @@
 # define BPURPLE "\x1b[95m"
 # define CYAN "\x1b[36m"
 # define BCYAN "\x1b[96m"
-# define RESET "\x1b[0m"
+# define RT "\x1b[0m"
 
 typedef enum e_malloc
 {
 	MALLOC_PHILOSOPHERS,
 	MALLOC_FORKS,
 	MALLOC_TABLE,
+	MALLOC_PRINTER,
 }			t_smalloc;
 
 typedef enum e_code_mtx
@@ -57,7 +58,7 @@ typedef enum e_code_thread
 	JOIN,
 	CREATE,
 	DETACH,
-}			t_code_thread;
+}			t_c_th;
 
 typedef enum e_time_val
 {
@@ -76,6 +77,12 @@ typedef enum e_status
 
 typedef pthread_mutex_t	t_mtx;
 
+typedef struct s_printer
+{
+	pthread_mutex_t		p_mutex;
+	char				*status;
+}						t_printer;
+
 typedef struct s_forks
 {
 	pthread_mutex_t		fork_mutex;
@@ -85,10 +92,11 @@ typedef struct s_forks
 typedef struct s_table
 {
 	pthread_t			tid;
+	int					stop_simulation;
 	int					nb_philo;
-	unsigned int		time_die;
-	unsigned int		time_eat;
-	unsigned int		time_sleep;
+	long				time_die;
+	long				time_eat;
+	long				time_sleep;
 	int					meals_max;
 	int					meals_eaten;
 	int					philo_died;
@@ -105,9 +113,9 @@ typedef struct s_philo
 	long				t_start;
 	unsigned int		id;
 	pthread_t			tid;
-	unsigned int		time_die;
-	unsigned int		time_eat;
-	unsigned int		time_sleep;
+	long				time_die;
+	long				time_eat;
+	long				time_sleep;
 	int					meals_max;
 	int					meals_eaten;
 	int					nb_philo;
@@ -132,19 +140,19 @@ t_table					*init_philosophers(int arc, char **argv);
 void					init_forks(t_table *table);
 int						ft_strcmp(const char *s1, const char *s2);
 void					ft_mutex(t_philo *philo, pthread_mutex_t *philo_mutex);
-int						eater(t_philo *philo, int id, long t_start);
-void					print_status(t_philo *philo, char *status, long time); /// TO DO DEBUG
-long long				get_time_diff(struct timespec start, struct timespec end);
-long					get_elapsed_time_microseconds(struct timeval start, struct timeval end);
-void					ft_usleep(long usec);
+long					time_micro(struct timeval start, struct timeval end);
+void					ft_usleep(long usec, t_table *table);
 int						error(char *msg);
 int						safe_mutex(t_code_mtx code, t_mtx *mutex);
-int						safe_thread(t_code_thread code, t_philo *philo, void *(*)(void *));
+int						s_thd(t_c_th code, t_philo *p, void *(*th_r)(void *));
 t_table					*safe_malloc(t_smalloc code, t_table *table);
 long					gettime(t_time_val time_val);
 void					firewatch(void *data, long time_start);
-void					printer(unsigned int time, int id, char *status);
-
+void					printer(long time, int id, char *status, t_table *table);
+void					fprinter(long time, int id, char *status, t_table *table);
+void					all_stop_simulation(t_table *table);
+long					el_st(long time_start);
+int						all_eaten(t_table *table);
 // UTILS
 int						ft_atoi(const char *str);
 void					ft_itoa(unsigned int n, char *str);
@@ -152,21 +160,23 @@ char					*reverse(char *str);
 int						check_argv_positivity(char **argv);
 int						ft_strlen(const char *str);
 void					ft_free(t_table *table);
-
 // MTX PHILO
-unsigned int 			mtx_read_id(t_philo *philo);
+unsigned int			m_id(t_philo *philo);
 long					mtx_p_t_start(t_philo *philo);
-int						mtx_stop_sim_read(t_philo *philo);
+int						m_stop_r(t_philo *philo);
 void					mtx_stop_sim_write(t_philo *philo);
 int						mtx_meal_eat_philo(t_philo *philo);
 long					mtx_last_meal_time(t_philo *philo);
 int						mtx_p_max_meals(t_philo *philo);
 int						mtx_pnb_philo(t_philo *philo);
-
+long					m_t_peat(t_philo *philo);
 // MTX TABLE
 int						mtx_table_maxmeals(t_table *table);
 int						mtx_tnb_philo(t_table *table);
 long					mtx_table_tdie(t_table *table);
-int						mtx_table_teat(t_table *table);
+long					m_teat(t_table *table);
+long					m_tsleep(t_table *table);
+int						m_if_die_r(t_table *table);
+void					m_die_w(t_table *table);
 
 #endif

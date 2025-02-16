@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 06:35:32 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/12 23:29:11 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/02/16 18:03:12 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,35 +29,36 @@ long	gettime(t_time_val time_val)
 	return (0);
 }
 
-long	get_elapsed_time_microseconds(struct timeval start, struct timeval end)
+long	time_micro(struct timeval start, struct timeval end)
 {
-	return (end.tv_sec - start.tv_sec) * 1e6 + (end.tv_usec
-		- start.tv_usec);
+	return ((end.tv_sec - start.tv_sec) * 1e6 + (end.tv_usec - start.tv_usec));
 }
 
-void	ft_usleep(long usec)
+void	ft_usleep(long usec, t_table *table)
 {
 	long			elapsed;
 	long			rem;
 	struct timeval	start;
 	struct timeval	stop;
-	
+	long			t_die;
+
 	elapsed = 0;
+	t_die = mtx_table_tdie(table);
 	gettimeofday(&start, NULL);
 	while (elapsed < usec)
 	{
 		gettimeofday(&stop, NULL);
-		elapsed = get_elapsed_time_microseconds(start, stop);
+		elapsed = time_micro(start, stop);
 		rem = usec - elapsed;
+		if (usec >= t_die || m_tsleep(table) >= t_die || m_teat(table) >= t_die)
+		{
+			//printf("%ld %d T died\n", gettime(MILLISECOND) - table->t_start, m_id(&table->philo[0]));
+			table->philo_died = 1;
+			usleep(t_die);
+			all_stop_simulation(table);
+			return ;
+		}
 		if (rem > 1000)
 			usleep(rem / 2);
-/* 		if (elapsed / 1e3 >= mtx_table_tdie(table) * 2)
-		{
-			safe_mutex(LOCK, &table->table_mutex);
-			printf("TIME UP !!!(%ld) Philo %d died\n", elapsed, table->philo->id);
-			table->philo_died = 1;
-			safe_mutex(UNLOCK, &table->table_mutex);
-			return ;
-		} */
 	}
 }
