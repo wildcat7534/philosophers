@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 23:34:25 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/16 22:28:10 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/03/08 01:33:46 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,50 +135,53 @@ typedef struct s_time
 	suseconds_t			tv_usec;
 }						t_time;
 
-int						start_simulation(t_table *table);
-void					*thd_rte(void *data);
-t_table					*init_philosophers(int arc, char **argv);
-void					init_forks(t_table *table);
-int						ft_strcmp(const char *s1, const char *s2);
-void					ft_mutex(t_philo *philo, pthread_mutex_t *philo_mutex);
-long					time_micro(struct timeval start, struct timeval end);
-void					ft_usleep(long usec, t_table *table);
-int						error(char *msg);
-int						safe_mutex(t_code_mtx code, t_mtx *mutex);
-int						s_thd(t_c_th code, t_philo *p, void *(*th_r)(void *));
-t_table					*safe_malloc(t_smalloc code, t_table *table);
-long					gettime(t_time_val time_val);
-void					firewatch(void *data, long time_start);
-void					printer(long time, int id, char *status, t_table *table);
-void					fprinter(long time, int id, char *status, t_table *table);
-void					all_stop_simulation(t_table *table);
-long					el_st(long time_start);
-int						all_eaten(t_table *table);
+int				start_simulation(t_table *table);
+void			*thd_rte(void *data);
+t_table			*init_philosophers(int arc, char **argv);
+void			init_forks(t_table *table);
+int				ft_strcmp(const char *s1, const char *s2);
+void			ft_mutex(t_philo *philo, pthread_mutex_t *philo_mutex);
+long			time_micro(struct timeval start, struct timeval end);
+void			ft_usleep(long usec, t_table *table);
+int				safe_mutex(t_code_mtx code, t_mtx *mutex);
+int				s_thd(t_c_th code, t_philo *p, void *(*th_r)(void *));
+t_table			*safe_malloc(t_smalloc code, t_table *table);
+long			gettime(t_time_val time_val);
+void			firewatch(void *data, long time_start);
+//void			printer(long time, int id, char *status, t_table *table);
+void			all_stop_simulation(t_table *table);
+long			el_st(long time_start);
+int				all_eaten(t_table *table);
+// PRINTER
+int				error(char *msg);
+void			fprinter_died(long time, int id, char *status, t_table *table);
+void			fprinter_alive(long time, int id, char *status, t_table *table);
+void			fprinter(long time, int id, char *status, t_table *table);
 // UTILS
-int						ft_atoi(const char *str);
-void					ft_itoa(unsigned int n, char *str);
-char					*reverse(char *str);
-int						check_argv_positivity(char **argv);
-int						ft_strlen(const char *str);
-void					ft_free(t_table *table);
+int				ft_atoi(const char *str);
+void			ft_itoa(unsigned int n, char *str);
+char			*reverse(char *str);
+int				check_argv_positivity(char **argv);
+int				ft_strlen(const char *str);
+void			ft_free(t_table *table);
 // MTX PHILO
-unsigned int			m_id(t_philo *philo);
-long					mtx_p_t_start(t_philo *philo);
-int						m_stop_r(t_philo *philo);
-void					mtx_stop_sim_write(t_philo *philo);
-int						mtx_meal_eat_philo(t_philo *philo);
-long					mtx_last_meal_time(t_philo *philo);
-int						mtx_p_max_meals(t_philo *philo);
-int						mtx_pnb_philo(t_philo *philo);
-long					m_t_peat(t_philo *philo);
-long					m_tdie(t_philo *philo);
+unsigned int	m_id(t_philo *philo);
+long			mtx_p_t_start(t_philo *philo);
+int				m_stop_r(t_philo *philo);
+void			mtx_stop_sim_write(t_philo *philo);
+int				mtx_meal_eat_philo(t_philo *philo);
+long			mtx_last_meal_time(t_philo *philo);
+int				mtx_p_max_meals(t_philo *philo);
+int				mtx_pnb_philo(t_philo *philo);
+long			m_t_peat(t_philo *philo);
+long			m_tdie(t_philo *philo);
 // MTX TABLE
-int						mtx_table_maxmeals(t_table *table);
-int						mtx_tnb_philo(t_table *table);
-long					mtx_table_tdie(t_table *table);
-long					m_teat(t_table *table);
-long					m_tsleep(t_table *table);
-int						m_if_die_r(t_table *table);
-void					m_die_w(t_table *table);
+int				mtx_table_maxmeals(t_table *table);
+int				mtx_tnb_philo(t_table *table);
+long			mtx_table_tdie(t_table *table);
+long			m_teat(t_table *table);
+long			m_tsleep(t_table *table);
+int				m_if_die_r(t_table *table);
+void			m_die_w(t_table *table);
 
 #endif

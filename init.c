@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 23:44:18 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/16 16:49:01 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/03/07 19:15:56 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_table	*init_philosophers(int arc, char **argv)
 	safe_malloc(MALLOC_PRINTER, table);
 	safe_mutex(INIT, &table->printer->p_mutex);
 	safe_mutex(INIT, &table->table_mutex);
-	//table->printer_mutex
 	table->philo_died = 0;
 	table->stop_simulation = 0;
 	table->t_start = gettime(MILLISECOND);

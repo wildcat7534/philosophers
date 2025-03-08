@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 16:51:38 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/16 17:57:34 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/03/07 19:15:56 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	ft_free(t_table *table)
 		pthread_mutex_destroy(&table->philo[i].philo_mutex);
 	}
 	pthread_mutex_destroy(&table->table_mutex);
-	//free(table->printer->status);
 	free(table->printer);
 	free(table->philo);
 	free(table->forks);

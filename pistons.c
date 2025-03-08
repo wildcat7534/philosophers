@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 21:54:00 by cmassol           #+#    #+#             */
-/*   Updated: 2025/02/16 22:48:50 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/03/08 01:10:19 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ void	*thd_rte(void *data)
 	t_start = mtx_p_t_start(philo);
 	if (id % 2 == 0)
 		ft_usleep(m_t_peat(philo), philo->table);
-	if (mtx_pnb_philo(philo) % 2 == 0)
-		ft_usleep(m_tdie(philo) / 2 - 100, philo->table);
 	while (!m_stop_r(philo))
 	{
 		if (meal_max != 0)
@@ -38,7 +36,6 @@ void	*thd_rte(void *data)
 			if (mtx_meal_eat_philo(philo) >= meal_max)
 				break ;
 		}
-		//printer(gettime(MILLISECOND) - t_start, id, "is thinking", philo->table);
 		fprinter(t_start, id, "is thinking", philo->table);
 		if (eater(philo, id, t_start) || m_stop_r(philo))
 			return (NULL);
@@ -50,7 +47,6 @@ static int	eater(t_philo *philo, int id, long t_start)
 {
 	if (!eat_mutex(philo, id, t_start) && !m_stop_r(philo))
 	{
-		//printer(gettime(MILLISECOND) - t_start, id, "is sleeping", philo->table);
 		fprinter(t_start, id, "is sleeping", philo->table);
 		ft_usleep(philo->time_sleep, philo->table);
 	}
@@ -65,7 +61,6 @@ static int	eat_mutex(t_philo *philo, int id, long t_start)
 	{
 		if (safe_mutex(LOCK, &philo->lfork->fork_mutex) != 0)
 			return (1);
-		//printer(gettime(MILLISECOND) - t_start, id, "has taken a fork", philo->table);
 		fprinter(t_start, id, "has taken a fork", philo->table);
 		if (mtx_pnb_philo(philo) == 1)
 		{
@@ -73,7 +68,6 @@ static int	eat_mutex(t_philo *philo, int id, long t_start)
 			ft_usleep(philo->time_die, philo->table);
 			return (1);
 		}
-		//ft_usleep(10, philo->table);
 		if (m_stop_r(philo))
 		{
 			safe_mutex(UNLOCK, &philo->lfork->fork_mutex);
@@ -84,7 +78,6 @@ static int	eat_mutex(t_philo *philo, int id, long t_start)
 			safe_mutex(UNLOCK, &philo->lfork->fork_mutex);
 			return (1);
 		}
-		//printer(gettime(MILLISECOND) - t_start, id, "has taken a fork", philo->table);
 		fprinter(t_start, id, "has taken a fork", philo->table);
 		return (eat_mutex_2(philo, id, t_start));
 	}
@@ -95,7 +88,6 @@ static int	eat_mutex_2(t_philo *philo, int id, long t_start)
 {
 	if (!m_stop_r(philo))
 	{
-		//printer(gettime(MILLISECOND) - t_start, id, "is eating", philo->table);
 		fprinter(t_start, id, "is eating", philo->table);
 		safe_mutex(LOCK, &philo->philo_mutex);
 		philo->meals_eaten++;
