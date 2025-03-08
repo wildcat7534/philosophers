@@ -6,11 +6,14 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 20:34:35 by cmassol           #+#    #+#             */
-/*   Updated: 2025/03/08 01:34:45 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/03/08 09:50:59 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+static void	fprinter_died(long time, int id, char *status, t_table *table);
+static void	fprinter_alive(long time, int id, char *status, t_table *table);
 
 int	error(char *msg)
 {
@@ -27,16 +30,13 @@ void	fprinter(long time, int id, char *status, t_table *table)
 	stop_sim = table->stop_simulation;
 	philo_died = table->philo_died;
 	safe_mutex(UNLOCK, &table->table_mutex);
-	if (philo_died == 0 || stop_sim == 0)
-	{
-		if (ft_strcmp(status, "died") == 0)
-			fprinter_died(time, id, status, table);
-		else
-			fprinter_alive(time, id, status, table);
-	}
+	if (ft_strcmp(status, "died") == 0)
+		fprinter_died(time, id, status, table);
+	else if (philo_died == 0 && stop_sim == 0)
+		fprinter_alive(time, id, status, table);
 }
 
-void	fprinter_died(long time, int id, char *status, t_table *table)
+static void	fprinter_died(long time, int id, char *status, t_table *table)
 {
 	long	timestamp;
 
@@ -48,7 +48,7 @@ void	fprinter_died(long time, int id, char *status, t_table *table)
 	safe_mutex(UNLOCK, &table->printer->p_mutex);
 }
 
-void	fprinter_alive(long time, int id, char *status, t_table *table)
+static void	fprinter_alive(long time, int id, char *status, t_table *table)
 {
 	int	stop_sim;
 	int	philo_died;

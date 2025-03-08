@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 23:34:25 by cmassol           #+#    #+#             */
-/*   Updated: 2025/03/08 01:33:46 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/03/08 06:58:05 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,8 +154,6 @@ long			el_st(long time_start);
 int				all_eaten(t_table *table);
 // PRINTER
 int				error(char *msg);
-void			fprinter_died(long time, int id, char *status, t_table *table);
-void			fprinter_alive(long time, int id, char *status, t_table *table);
 void			fprinter(long time, int id, char *status, t_table *table);
 // UTILS
 int				ft_atoi(const char *str);

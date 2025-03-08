@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:40:40 by cmassol           #+#    #+#             */
-/*   Updated: 2025/03/08 02:40:38 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/03/08 09:55:38 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static int	firewatch_engine(t_table *table, long t_die, long t_s)
 {
 	int		i;
 	long	t_eat;
-	int		id;
 	int		maxmeal;
 	int		nb_philo;
 
@@ -49,19 +48,12 @@ static int	firewatch_engine(t_table *table, long t_die, long t_s)
 	i = -1;
 	while (++i < nb_philo)
 	{
-		if (nb_philo > 131 && nb_philo != 199)
-			ft_usleep(2000, table);
-		else
-			ft_usleep(100, table);
+		ft_usleep(10, table);
 		t_eat = mtx_last_meal_time(&table->philo[i]);
 		if ((gt() - t_eat >= t_die && t_eat != 0))
 		{
-			id = m_id(&table->philo[i]);
-			fprinter(t_s, id, "died", table);
 			all_stop_simulation(table);
-			safe_mutex(LOCK, &table->table_mutex);
-			table->stop_simulation = 1;
-			safe_mutex(UNLOCK, &table->table_mutex);
+			fprinter(t_s, m_id(&table->philo[i]), "died", table);
 			return (1);
 		}
 		else if (maxmeal != 0)
