@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 23:34:25 by cmassol           #+#    #+#             */
-/*   Updated: 2025/03/08 06:58:05 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/03/09 00:40:22 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
-# include <sys/time.h> // TODO: remove this peut etre
-# include <time.h>
+# include <sys/time.h>
+//# include <time.h>
 # include <unistd.h>
 
 // color codes
@@ -27,8 +27,8 @@
 # define BRED "\x1b[91m"
 # define GREEN "\x1b[32m"
 # define BGREEN "\x1b[92m"
-# define YELLOW "\x1b[33m"
-# define BYELLOW "\x1b[93m"
+# define YW "\x1b[33m"
+# define BYW "\x1b[93m"
 # define BLUE "\x1b[34m"
 # define BBLUE "\x1b[94m"
 # define PURPLE "\x1b[35m"
@@ -148,7 +148,6 @@ int				s_thd(t_c_th code, t_philo *p, void *(*th_r)(void *));
 t_table			*safe_malloc(t_smalloc code, t_table *table);
 long			gettime(t_time_val time_val);
 void			firewatch(void *data, long time_start);
-//void			printer(long time, int id, char *status, t_table *table);
 void			all_stop_simulation(t_table *table);
 long			el_st(long time_start);
 int				all_eaten(t_table *table);

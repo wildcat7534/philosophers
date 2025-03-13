@@ -6,7 +6,7 @@
 /*   By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 19:19:41 by cmassol           #+#    #+#             */
-/*   Updated: 2025/03/07 19:15:56 by cmassol          ###   ########.fr       */
+/*   Updated: 2025/03/09 16:09:22 by cmassol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	start_simulation(t_table *table)
 	while (++i < table->nb_philo)
 		if (s_thd(JOIN, &table->philo[i], thd_rte) != 0)
 			return (1);
-	i = -1;
 	ft_free(table);
 	return (0);
 }

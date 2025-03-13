@@ -6,11 +6,11 @@
 #    By: cmassol <cmassol@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/31 03:52:33 by cmassol           #+#    #+#              #
-#    Updated: 2025/03/08 01:23:58 by cmassol          ###   ########.fr        #
+#    Updated: 2025/03/09 16:50:14 by cmassol          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = arphilo
+NAME = philo
 
 HEADERS = philosophers.h
 
@@ -18,9 +18,9 @@ SOURCES = main.c time.c printer.c factory.c init.c engine.c pistons.c \
 			firewatch.c utils.c utils2.c utils3_pmtx.c utils4_pmtx.c \
 			utils5_tmtx.c utils6_tmtx.c
 
-OBJECTS = $(addprefix $(OBJDIR)/,$(SOURCES:.c=.o))
-
 OBJDIR = obj
+
+OBJECTS = $(addprefix $(OBJDIR)/,$(SOURCES:.c=.o))
 
 CC = cc
 
@@ -28,22 +28,19 @@ FLAGS = -Wall -Wextra -Werror -pthread -g3
 
 RM = rm -f
 
-AR = ar rcs
-
-PROGRAM = philo
 
 DEF_COLOR = \033[0;39m
 GRAY = \033[0;90m
 RED = \033[0;91m
 GREEN = \033[0;92m
-YELLOW = \033[0;93m
+YW = \033[0;93m
 BLUE = \033[0;94m
 MAGENTA = \033[0;95m
 CYAN = \033[0;96m
 WHITE = \033[0;97m
 
 
-all: obj $(NAME)
+all: $(NAME)
 
 obj:
 	mkdir -p $(OBJDIR)
@@ -51,9 +48,9 @@ obj:
 deldir:
 	$(RM) -r $(OBJDIR)
 
-$(NAME): $(OBJECTS)
-	@echo "              $(YELLOW) **** >>>>> Compiling: $(INFO) <<<<< **** $(DEF_COLOR)"
-	$(CC) $(FLAGS) $(OBJECTS) -o $(PROGRAM)
+$(NAME): obj $(OBJECTS) $(HEADERS)
+	@echo "              $(YW) **** >>>>> Compiling: $(INFO) <<<<< **** $(DEF_COLOR)"
+	$(CC) $(FLAGS) $(OBJECTS) -o $(NAME)
 	@echo ""
 	@echo ""
 	@echo "$(GREEN)          () () $(DEF_COLOR)"
@@ -72,7 +69,7 @@ clean: deldir
 	
 fclean: clean
 	@echo "$(MAGENTA)FCLEAN NAME FOR :  $(OBJECTS) ! $(DEF_COLOR)"
-	$(RM) $(PROGRAM)
+	$(RM) $(NAME)
 	
 re: fclean all
 
